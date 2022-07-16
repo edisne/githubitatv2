@@ -1,8 +1,11 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col">
-            <div class="alert alert-success" *ngIf="success" role="alert">
-                Succesfully added Todo Task
+            <div class="alert alert-success" *ngIf="successAdd" role="alert">
+                Successfully added Todo Task
+              </div>
+            <div class="alert alert-success" *ngIf="successUpdate" role="alert">
+                Successfully updated Todo Task
               </div>
               <div class="alert alert-danger" *ngIf="error" role="alert">
                 Error: {{error.statusText}}

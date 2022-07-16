@@ -25,6 +25,10 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFireModule, FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +50,10 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
 
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireModule,
+
     MatSliderModule,
     MatCardModule,
     MatChipsModule,
@@ -55,7 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatNativeDateModule,
     MatInputModule,
 
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    //provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
   ],
   providers: [],

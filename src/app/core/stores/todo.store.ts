@@ -63,6 +63,7 @@ export class TodoStore {
         newTodos[index] = newTodo;
       
         this.subject.next(newTodos);
+        return this.todoService.update(todo);
     }
 
 

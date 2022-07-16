@@ -32,7 +32,8 @@ export class TodoFormComponent implements OnInit, OnDestroy {
   todo: any;
   todoSubscription = new Subscription;
   todoStoreSubscription = new Subscription;
-  success: any;
+  successAdd: any;
+  successUpdate:any;
   error: any;
 
 
@@ -78,9 +79,10 @@ export class TodoFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    console.log(this.todo.date);
     if (!this.id) {
       let todo: Todo = {
-        date: new Date(this.selectedDate),
+        date: new Date(this.todo.date),
         title: form.value.title,
         description: form.value.description,
         project: form.value.project,
@@ -89,7 +91,7 @@ export class TodoFormComponent implements OnInit, OnDestroy {
 
       this.todoStoreSubscription = this.todoStore.add(todo).subscribe({
         next: (v) => {
-          this.success = true;
+          this.successAdd = true;
         },
         error: (e) => {
           this.error = e;
@@ -98,7 +100,14 @@ export class TodoFormComponent implements OnInit, OnDestroy {
       this.todo.tags = [];
       form.reset();
     } else
-      this.todoStore.update(this.todo);
+      this.todoStoreSubscription =this.todoStore.update(this.todo).subscribe({
+        next: (v) => {
+          this.successUpdate = true;
+        },
+        error: (e) => {
+          this.error = e;
+        },
+      });
 
     window.scroll({
       top: 0,
