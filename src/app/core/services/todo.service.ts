@@ -14,8 +14,7 @@ export class TodoService {
   constructor(private http: HttpClient) { }
 
   save(todo: Todo){
-    this.http.post<Todo>(this.baseUrl+'/todos.json',todo).subscribe(response=>{
-    })
+    return this.http.post<Todo>(this.baseUrl+'/todos.json',todo);
   }
   getAll(){
     let todos: Todo[] = [];

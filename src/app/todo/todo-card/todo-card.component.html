@@ -1,8 +1,10 @@
 <mat-card class="card">
-    <mat-chip color="primary" selected>Primary fish</mat-chip>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    <mat-card-content>
-      <p>{{longText}}</p>
+    <mat-chip-list *ngFor="let tag of todo.tags">
+        <mat-chip [color]="tag.color" selected>{{tag.title}}</mat-chip>
+    </mat-chip-list>
+    <mat-card-title class="mt-5">{{todo.title}}</mat-card-title>
+    <mat-card-subtitle>{{todo.description}}</mat-card-subtitle>
+    <mat-card-content class="grayed-out">
+        <p>{{todo.date | date}}</p>
     </mat-card-content>
-  </mat-card>
+</mat-card>

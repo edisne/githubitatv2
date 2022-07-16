@@ -23,6 +23,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -36,12 +37,15 @@ import { FormsModule } from '@angular/forms';
     RouterModule.forRoot([
       { path:'', component: HomeComponent},
       { path:'todo/add', component: TodoFormComponent},
+      { path:'todo/edit/:id', component: TodoFormComponent},
     ]),
 
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
+
     MatSliderModule,
     MatCardModule,
     MatChipsModule,

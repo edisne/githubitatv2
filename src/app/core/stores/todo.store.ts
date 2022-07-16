@@ -47,8 +47,8 @@ export class TodoStore {
         else {
             todos.push(todo);
         }
-        this.todoService.save(todo);
         this.subject.next(todos);
+        return this.todoService.save(todo);
     }
 
     update(todo: Todo){

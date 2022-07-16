@@ -1,58 +1,110 @@
-import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import {FormControl} from '@angular/forms';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { FormControl } from '@angular/forms';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Todo } from 'src/app/core/models/todo';
+import { TodoStore } from 'src/app/core/stores/todo.store';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+
+export interface Tag {
+  title: string,
+  color: string
+}
 
 @Component({
   selector: 'app-todo-form',
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.scss']
 })
-export class TodoFormComponent implements OnInit {
+export class TodoFormComponent implements OnInit, OnDestroy {
 
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   addOnBlur = true;
-  fruitCtrl = new FormControl('');
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+
+  tagCtrl = new FormControl('');
+  tags: Tag[] = [];
+  availableColors: string[] = ['primary', 'accent', 'warn'];
 
   selectedDate: any;
-  todo:Todo = new Todo;
+  id: any;
+  todo: any;
+  todoSubscription = new Subscription;
+  todoStoreSubscription = new Subscription;
+  success: any;
+  error: any;
 
-  constructor() {
 
+  constructor(private todoStore: TodoStore,
+    private activatedRoute: ActivatedRoute) { }
+
+  ngOnDestroy(): void {
+    this.todoSubscription.unsubscribe();
+    this.todoStoreSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
-    
+    this.todo = new Todo();
+    this.id = this.activatedRoute.snapshot.paramMap.get("id");
+    if (this.id) {
+      this.todoSubscription = this.todoStore.getById(this.id).subscribe(todo => {
+        this.todo = todo;
+      });
+    }
   }
   add(event: any): void {
     const value = (event.value || '').trim();
-
-    // Add our fruit
     if (value) {
-      this.fruits.push(value);
+      let tag: Tag = {
+        title: value,
+        color: this.getRandomColor()
+      }
+      this.todo.tags.push(tag);
     }
-
-    // Clear the input value
     event.chipInput!.clear();
-
-    this.fruitCtrl.setValue(null);
+    this.tagCtrl.setValue(null);
   }
-  
-  remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
 
+  remove(tag: Tag): void {
+    const index = this.tags.indexOf(tag);
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.tags.splice(index, 1);
     }
   }
 
-  onSubmit(form:NgForm){
-    console.log(form.value);
-    console.log(this.fruits);
-    console.log(this.selectedDate);
+  getRandomColor() {
+    return this.availableColors[Math.floor(Math.random() * this.availableColors.length)]
+  }
+
+  onSubmit(form: NgForm) {
+    if (!this.id) {
+      let todo: Todo = {
+        date: new Date(this.selectedDate),
+        title: form.value.title,
+        description: form.value.description,
+        project: form.value.project,
+        tags: this.todo.tags,
+      }
+
+      this.todoStoreSubscription = this.todoStore.add(todo).subscribe({
+        next: (v) => {
+          this.success = true;
+        },
+        error: (e) => {
+          this.error = e;
+        },
+      });
+      this.todo.tags = [];
+      form.reset();
+    } else
+      this.todoStore.update(this.todo);
+
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
   }
 }

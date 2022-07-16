@@ -1,18 +1,26 @@
-<div class="container">
+<div class="container mt-3">
     <div class="row">
         <div class="col">
+            <div class="alert alert-success" *ngIf="success" role="alert">
+                Succesfully added Todo Task
+              </div>
+              <div class="alert alert-danger" *ngIf="error" role="alert">
+                Error: {{error.statusText}}
+              </div>
             <form #f="ngForm" (ngSubmit)="onSubmit(f)">
                 <mat-card>
                     <div class="calendar-wrapper">
-                        <mat-calendar #calendar [(selected)]="selectedDate">
+                        <mat-calendar #calendar [(selected)]="todo.date">
                         </mat-calendar>
                     </div>
                 </mat-card>
                 <mat-card class="mt-3 mb-5">
                     <mat-card-title>
+                        <mat-label>
+                            Title
+                        </mat-label>
                         <mat-form-field class="todo-title input-full">
-                            <mat-label>Title</mat-label>
-                            <input matInput #title="ngModel" name="title" [(ngModel)]="todo.title">
+                            <input matInput #title="ngModel" name="title" [(ngModel)]="todo.title" required>
                             <mat-error *ngIf="title.invalid && title.touched">Title is required</mat-error>
                         </mat-form-field>
                     </mat-card-title>
@@ -33,7 +41,7 @@
                             <mat-icon matPrefix color="primary">folder</mat-icon> Project
                         </mat-label>
                         <input matInput #project="ngModel" name="project" [(ngModel)]="todo.project"
-                            placeholder="Project title">
+                            placeholder="Project title" required>
                         <mat-error *ngIf="project.invalid && project.touched">Project is required</mat-error>
                     </mat-form-field>
 
@@ -42,20 +50,20 @@
                             <mat-icon matPrefix color="primary">sell</mat-icon> Tags
                         </mat-label>
                         <mat-chip-list #tagList aria-label="Tags selection">
-                            <mat-chip color="primary" selected *ngFor="let fruit of fruits" (removed)="remove(fruit)">
-                                {{fruit}}
+                            <mat-chip [color]="tag.color" selected *ngFor="let tag of todo.tags" (removed)="remove(tag)">
+                                {{tag.title}}
                                 <button matChipRemove>
                                     <mat-icon>cancel</mat-icon>
                                 </button>
                             </mat-chip>
-                            <input matInput placeholder="+ Add Tags" [matChipInputFor]="tagList"
+                            <input matInput placeholder="+Add Tags" [matChipInputFor]="tagList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                                 (matChipInputTokenEnd)="add($event)">
                         </mat-chip-list>
                     </mat-form-field>
 
                     <mat-card-actions class="col text-center mt-5 mb-5">
-                        <button mat-raised-button color="primary" class="finish" type="submit">Finish</button>
+                        <button mat-raised-button color="primary" class="finish" type="submit" [disabled]="f.invalid">Finish</button>
                     </mat-card-actions>
                 </mat-card>
 
