@@ -7,5 +7,6 @@ export const environment = {
     authDomain: 'todoist-66fac.firebaseapp.com',
     messagingSenderId: '628860967328',
   },
-  production: true
+  production: true,
+  baseUrl:'https://todoist-66fac-default-rtdb.europe-west1.firebasedatabase.app/'
 };

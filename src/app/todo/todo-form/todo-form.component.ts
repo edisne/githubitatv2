@@ -68,9 +68,9 @@ export class TodoFormComponent implements OnInit, OnDestroy {
   }
 
   remove(tag: Tag): void {
-    const index = this.tags.indexOf(tag);
+    const index = this.todo.tags.indexOf(tag);
     if (index >= 0) {
-      this.tags.splice(index, 1);
+      this.todo.tags.splice(index, 1);
     }
   }
 
@@ -79,7 +79,6 @@ export class TodoFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    console.log(this.todo.date);
     if (!this.id) {
       let todo: Todo = {
         date: new Date(this.todo.date),
