@@ -12,7 +12,7 @@ export const environment = {
     messagingSenderId: '628860967328',
   },
   production: false,
-  baseUrl:'https://todoist-66fac-default-rtdb.europe-west1.firebasedatabase.app/',
+  baseUrl:'https://localhost:7280/api/',
 };
 
 /*

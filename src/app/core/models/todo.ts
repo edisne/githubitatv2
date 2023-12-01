@@ -9,5 +9,7 @@ export class Todo{
                 public description:string = '',
                 public project:string = '',
                 public tags:Tag[] = [],
+                public userId?:string,
+                public image: string[] = [],
                 ){}
 }

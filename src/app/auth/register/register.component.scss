@@ -1,0 +1,34 @@
+.input-full {
+    width: 100%;
+}
+
+mat-card-header {
+    display: flex;
+    justify-content: center;
+}
+
+mat-card {
+    width: 400px;
+    height: 35 0px;
+    margin: 2em auto;
+    text-align: center;
+}
+
+mat-form-field {
+    display: block;
+}
+
+mat-card-content {
+    padding: 32px;
+}
+
+:host {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/assets/login-background.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+}
