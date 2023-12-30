@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Todoist": {
+    "NovularExercise": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/todoist",
+            "outputPath": "dist/NovularExercise",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -74,10 +74,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Todoist:build:production"
+              "browserTarget": "NovularExercise:build:production"
             },
             "development": {
-              "browserTarget": "Todoist:build:development"
+              "browserTarget": "NovularExercise:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Todoist:build"
+            "browserTarget": "NovularExercise:build"
           }
         },
         "test": {
@@ -108,19 +108,9 @@
             ],
             "scripts": []
           }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "prerender": false,
-            "ssr": false,
-            "browserTarget": "Todoist:build:production",
-            "firebaseProject": "todoist-66fac",
-            "firebaseHostingSite": "todoist-66fac"
-          }
         }
       }
     }
   },
-  "defaultProject": "Todoist"
+  "defaultProject": "NovularExercise"
 }

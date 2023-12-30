@@ -1,4 +1,4 @@
-.todo-cards{
+.user-cards{
   cursor: pointer;
 }
 .fab-button{
@@ -6,4 +6,9 @@
   bottom: 20px;
   right: 20px;
   z-index: 1000;
+}
+.paginator {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }

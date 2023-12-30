@@ -3,14 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouteReuseStrategy, RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';import { RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
-import { TodoCardComponent } from './todo/todo-card/todo-card.component';
-import { TodoFormComponent } from './todo/todo-form/todo-form.component';
-
-import { environment } from '../environments/environment';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
@@ -24,51 +19,47 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { RegisterComponent } from './auth/register/register.component';
-import { LoginComponent } from './auth/login/login.component';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
-import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog/confirm-dialog.component';
-import { ColorPickerDialogComponent } from './shared/color-picker-dialog/color-picker-dialog/color-picker-dialog.component';
-import { ColorPickerModule } from 'ngx-color-picker';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { followersReducer, githubReducer, userReducer } from './core/store/github.reducer';
+import { GithubEffects } from './core/store/github.effects';
+import { UserCardComponent } from './users/user-card/user-card.component';
+import { UserDetailsComponent } from './users/user-details/user-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TodoCardComponent,
-    TodoFormComponent,
-    RegisterComponent,
-    LoginComponent,
-    ConfirmDialogComponent,
-    ColorPickerDialogComponent,
+    UserCardComponent,
+    UserDetailsComponent,
   ],
   imports: [
     RouterModule.forRoot([
       { path:'', component: HomeComponent},
-      { path:'todo/add', component: TodoFormComponent},
-      { path:'todo/edit/:id', component: TodoFormComponent},
-      { path:'login', component: LoginComponent},
-      { path:'register', component: RegisterComponent},
+      { path:'user/:username', component: UserDetailsComponent},
     ]),
-
+    
     BrowserModule,
+    StoreModule.forRoot({
+      github: githubReducer,
+      user: userReducer,
+      followers: followersReducer,
+    }),
+    EffectsModule.forRoot([GithubEffects]),
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
-    AngularFireModule,
 
     MatSliderModule,
     MatCardModule,
@@ -82,9 +73,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
     MatDialogModule,
     MatAutocompleteModule,
     MatSelectModule,
-
-    PaginationModule,
-    ColorPickerModule,
+    MatPaginatorModule,
+    MatTabsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription, debounceTime, distinctUntilChanged, shareReplay, switchMap, tap } from 'rxjs';
+import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, switchMap } from 'rxjs';
 import { User } from '../core/models/user';
-import { AuthService } from '../core/services/auth.service';
-import { TodoStore } from '../core/stores/todo.store';
-import { TodoService } from '../core/services/todo.service';
-import { Todo } from '../core/models/todo';
 import { Pagination } from '../core/interfaces/pagination';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { FormControl } from '@angular/forms';
-import { Tag } from '../todo/todo-form/todo-form.component';
-import { MatSelectChange } from '@angular/material/select';
+import { Store } from '@ngrx/store';
+import * as GithubActions from '../core/store/github.actions';
+import { selectGithubUsers } from '../core/store/github.selector';
+import { GithubService } from '../core/services/github.service';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { ToastService } from '../core/services/toast.service';
+import { PageEvent } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-home',
@@ -18,76 +20,68 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  todos: Todo[] = [];
-  tags: Tag[] = [];
-  tagsAcc: any = new Map<string, Tag>();
-  subscription = new Subscription;
-  isAuthenticated: any;
-  user: any;
   pagination: Pagination | undefined;
   pageNumber = 1;
-  pageSize = 4;
-  
+  pageSize = 10;
   searchControl = new FormControl();
-  searchResultTodos: Todo[] = [];
   searchTerm: string = '';
+  searchResult$ : Observable<User[]> | undefined;
 
-  tagFilter: string = '';
+  users$: Observable<User[]> = new Observable;
 
-  constructor(private todoService: TodoService,
+
+  constructor(
     private router: Router,
-    private authService: AuthService) { }
+    private store: Store,
+    private githubService: GithubService,
+    private toast: ToastService
+    ) { }
 
   ngOnInit(): void {
-    let u = localStorage.getItem('user');
-    if (u) {
-      this.user = JSON.parse(u);
+    this.pagination = {
+      totalItems :300,
+      currentPage : 1,
+      itemsPerPage : 10,
+      totalPages : 10,
     }
-    else {
-      this.router.navigate(['/login']);
-    }
-    this.searchControl.valueChanges.pipe(
-      debounceTime(300),
+    this.searchResult$ = this.searchControl.valueChanges.pipe(
+      debounceTime(600),
       distinctUntilChanged(),
-      tap(term => this.searchTerm = term),
-      switchMap(term => this.todoService.getAll(this.pageNumber, this.pageSize, term, this.tagFilter)),
-      shareReplay(1)
-    ).subscribe (results => this.searchResultTodos = results.result!)
-    this.loadTodos();  
+      filter(value => value && value.trim().length > 2),
+      switchMap(value => this.githubService.searchUsers(value)),
+      map(response => response.items),
+      catchError(error => {
+        this.toast.error('Error searching users, try again later');
+        return of([]);
+      })
+    );
+    this.store.dispatch(GithubActions.loadUsers({pageSize: 10, since: 0}));
+    this.users$ = this.store.select(selectGithubUsers);
   }
 
-  loadTodos() {
-    this.todoService.getAll(this.pageNumber, this.pageSize, this.searchTerm, this.tagFilter).subscribe({
-      next: (response) => {
-        if (response.result) {
-          this.todos = response.result;
-          this.todos.reduce((accumulator, todo) => {
-            todo.tags.forEach(tag => {
-              if (!accumulator.has(tag.title)) {
-                accumulator.set(tag.title, tag);
-              }
-            });
-            return accumulator;
-          }, this.tagsAcc)
-          this.tags = [...this.tagsAcc.values()];
-          this.pagination = response.pagination;
-        }
-      }
-    });
+  onClicked(user: User) {
+    // this.router.navigate(['todo/edit/', id]);
   }
 
-  onClicked(id: string) {
-    this.router.navigate(['todo/edit/', id]);
-  }
-
-  pageChanged(event: PageChangedEvent) {
-    if (this.pageNumber !== event.page) {
-      this.pageNumber = event.page;
-      this.loadTodos(); 
-    }
-  }
+  // pageChanged(event: PageChangedEvent) {
+  //   if (this.pageNumber !== event.page) {
+  //     this.pageNumber = event.page;
+  //     // this.store.dispatch(GithubActions.loadGithubUsers());
+  //   }
+  // }
 
   onSelect() {
-    this.loadTodos(); 
+    // this.loadTodos(); 
+  }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.pagination!.currentPage = event.pageSize * event.pageIndex;
+    this.store.dispatch(GithubActions.loadUsers({pageSize: this.pageSize, since: this.pagination?.currentPage!}))
+  }
+
+  search(event: Event, trigger: MatAutocompleteTrigger) {
+    trigger.closePanel();
+    this.store.dispatch(GithubActions.search({username : this.searchControl.value}))
   }
 }

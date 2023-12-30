@@ -1,46 +1,40 @@
-<div class="container" *ngIf="user">
+<div class="container">
     <div class="row mt-3 d-flex col-12">
-        <div class="col-md-4 col-3">
-            <h1>Hey {{user.name + ' ' + user.lastName}}</h1>
-            <h1>This is your Todo list.</h1>
-        </div>
-        <div class="col-md-4 col-6 d-flex justify-content-center">
+        <div class="col-12 offset-md-4 col-md-4 d-flex justify-content-center">
             <mat-form-field [ngStyle]="{'width': '100%'}" appearance="outline">
                 <mat-label>Search</mat-label>
-                <input type="text" placeholder="Type to search..." aria-label="Number" matInput [formControl]="searchControl"
-                    [matAutocomplete]="auto">
+                <input type="text" placeholder="Type to search..." matInput [formControl]="searchControl"
+                    [matAutocomplete]="auto"
+                    (keyup.enter)="search($event, autocomplete)" #autocomplete="matAutocompleteTrigger">
                 <mat-icon matSuffix>search</mat-icon>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelect()">
-                    <mat-option *ngFor="let option of searchResultTodos" [value]="option.title">
-                        {{option.title}}
+                    <mat-option *ngFor="let option of searchResult$ | async" [value]="option?.login">
+                        {{option.login}}
                     </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4 col-3 d-flex justify-content-end pe-0">
-            <mat-form-field class="me-2">
-                <mat-label>Filter by tag</mat-label>
-                <mat-select [(ngModel)]="tagFilter" (selectionChange)="onSelect()">
-                    <mat-option *ngFor="let tag of tags" [value]="tag.title">
-                        {{tag.title}}
-                    </mat-option>
-                </mat-select>
             </mat-form-field>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-6 mt-2 todo-cards" *ngFor="let todo of todos" (click)="onClicked(todo.id!)">
-            <app-todo-card [todo]="todo"></app-todo-card>
+        <div class="col-12 col-md-4 mt-2 user-cards" *ngFor="let user of users$ | async" (click)="onClicked(user)">
+            <app-user-card [user]="user"></app-user-card>
         </div>
     </div>
     <button routerLink="todo/add" mat-fab color="primary" class="mt-5 fab-button">
         <mat-icon>add</mat-icon>
     </button>
 </div>
-<div class="d-flex justify-content-center mt-5" *ngIf="pagination">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+<div class="d-flex justify-content-center mt-5 paginator" *ngIf="pagination">
+    <!-- <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
         [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
         nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-    </pagination>
+    </pagination> -->
+    <mat-paginator
+              [length]="pagination.totalItems"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[10, 20, 30]"
+              aria-label="Select page"
+              (page)="pageChanged($event)">
+</mat-paginator>
 </div>

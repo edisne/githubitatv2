@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog/confirm-dialog.component';
 import { CanComponentDeactivate } from '../interfaces/can-component-deactivate';
 
 @Injectable({
@@ -18,13 +17,13 @@ export class LeavePageGuard implements CanDeactivate<CanComponentDeactivate> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Promise<boolean> {
       if (component.hasUnsavedChanges() && !component.isSubmited) {
-        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-          data: {
-            type: 'leave',
-            header: 'Unsaved changes'
-          }
-        })
-        return await dialogRef.afterClosed().toPromise();
+        // const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        //   data: {
+        //     type: 'leave',
+        //     header: 'Unsaved changes'
+        //   }
+        // })
+        // return await dialogRef.afterClosed().toPromise();
       }
 
     return true;
