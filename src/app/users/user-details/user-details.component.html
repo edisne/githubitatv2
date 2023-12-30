@@ -1,0 +1,45 @@
+<div class="container mt-3" *ngIf="user$ | async as user">
+    <div class="row">
+        <div class="col">
+                <div class="row" >
+                <mat-card class="mt-3 col-lg-4">
+                    <mat-card-title>
+                        {{user.name}}     
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        {{user.login}} 
+                    </mat-card-subtitle>
+                    <mat-card-content class="mt-4">
+                        <img class="profile-image" [src]="user.avatar_url">
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <div class="following">
+                            <mat-icon>people</mat-icon>
+                            <span>{{user.followers}} followers</span>
+                            <mat-icon class="ms-4">person_add</mat-icon>
+                            <span>{{user.following}} following</span> 
+                        </div>
+                        <div class="mt-2 following">
+                            <mat-icon>web</mat-icon>
+                            <a [href]="user.blog">Website</a>
+                        </div>
+                    </mat-card-actions>
+                </mat-card>
+                <mat-card class="mt-3 mb-5 col-lg-6 offset-lg-1">
+                    <mat-tab-group>
+                        <mat-tab label="Repositories"> Content 1 </mat-tab>
+                        <mat-tab label="Followers" >
+                            <div class="tab-content">
+                                <div class="col-12 user-cards " *ngFor="let follower of followers$ | async">
+                                    <app-user-card [user]="follower"></app-user-card>
+                                </div>       
+                            </div>
+
+                        </mat-tab>
+                        <mat-tab label="Third"> Content 3 </mat-tab>
+                      </mat-tab-group>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+.profile-image {
+    margin-top: 20px;
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+.following {
+    display: flex;
+    align-items: center;
+}
+
+mat-icon {
+    margin-right: 5px;
+}
+
+.tab-content{
+    height: 600px;
+    overflow: auto;
+}
