@@ -17,19 +17,12 @@
     </div>
 
     <div class="row">
-        <div class="col-12 col-md-4 mt-2 user-cards" *ngFor="let user of users$ | async" (click)="onClicked(user)">
+        <div class="col-12 col-md-4 mt-2 user-cards" *ngFor="let user of users$ | async">
             <app-user-card [user]="user"></app-user-card>
         </div>
     </div>
-    <button routerLink="todo/add" mat-fab color="primary" class="mt-5 fab-button">
-        <mat-icon>add</mat-icon>
-    </button>
 </div>
 <div class="d-flex justify-content-center mt-5 paginator" *ngIf="pagination">
-    <!-- <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-        [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-    </pagination> -->
     <mat-paginator
               [length]="pagination.totalItems"
               [pageSize]="pageSize"

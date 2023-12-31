@@ -1,3 +1,4 @@
+import { GitHubRepository } from "../models/repository";
 import { User } from "../models/user";
 
 export interface GithubState {
@@ -13,6 +14,12 @@ export interface UserState {
 
 export interface FollowersState {
     followers: User[];
+    loading: boolean;
+    error: any; 
+}
+
+export interface RepositoryState {
+    repositories: GitHubRepository[];
     loading: boolean;
     error: any; 
 }

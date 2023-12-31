@@ -14,6 +14,6 @@ export class UserCardComponent {
   constructor(private router: Router){}
 
   showUserDetails() {
-    this.router.navigate(['user/' + this.user?.login]);
+    this.router.navigate(['user/', this.user?.login]);
   }
 }

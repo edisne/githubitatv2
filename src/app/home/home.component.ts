@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
 
   users$: Observable<User[]> = new Observable;
 
-
   constructor(
     private router: Router,
     private store: Store,
@@ -47,7 +46,7 @@ export class HomeComponent implements OnInit {
     this.searchResult$ = this.searchControl.valueChanges.pipe(
       debounceTime(600),
       distinctUntilChanged(),
-      filter(value => value && value.trim().length > 2),
+      filter(value => value && value.trim().length > 1),
       switchMap(value => this.githubService.searchUsers(value)),
       map(response => response.items),
       catchError(error => {

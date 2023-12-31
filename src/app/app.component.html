@@ -1,1 +1,6 @@
-<router-outlet></router-outlet>
+<div [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
+    <div class="spinner-container" *ngIf="isLoading$ | async">
+        <mat-spinner diameter="60" color="primary" strokeWidth="3"></mat-spinner>
+    </div>
+    <router-outlet #o="outlet"></router-outlet>
+</div>

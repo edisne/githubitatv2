@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 
@@ -21,19 +21,28 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTabsModule} from '@angular/material/tabs';
-
-import { PaginationModule } from 'ngx-bootstrap/pagination';
+import {MatDividerModule} from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
-import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { followersReducer, githubReducer, userReducer } from './core/store/github.reducer';
+import { followersReducer, githubReducer, repositoriesReducer, userReducer } from './core/store/github.reducer';
 import { GithubEffects } from './core/store/github.effects';
-import { UserCardComponent } from './users/user-card/user-card.component';
+import { UserCardComponent } from './shared/user-card/user-card.component';
 import { UserDetailsComponent } from './users/user-details/user-details.component';
+import { RepositoryCardComponent } from './shared/repository-card/repository-card.component';
+
+const routes: Routes = [
+  { path:'', component: HomeComponent},
+  {
+    path: 'user/:username',
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+  },
+];
 
 @NgModule({
   declarations: [
@@ -41,18 +50,16 @@ import { UserDetailsComponent } from './users/user-details/user-details.componen
     HomeComponent,
     UserCardComponent,
     UserDetailsComponent,
+    RepositoryCardComponent,
   ],
   imports: [
-    RouterModule.forRoot([
-      { path:'', component: HomeComponent},
-      { path:'user/:username', component: UserDetailsComponent},
-    ]),
-    
+    RouterModule.forRoot(routes),
     BrowserModule,
     StoreModule.forRoot({
       github: githubReducer,
       user: userReducer,
       followers: followersReducer,
+      repositories: repositoriesReducer,
     }),
     EffectsModule.forRoot([GithubEffects]),
     AppRoutingModule,
@@ -75,9 +82,11 @@ import { UserDetailsComponent } from './users/user-details/user-details.componen
     MatSelectModule,
     MatPaginatorModule,
     MatTabsModule,
+    MatDividerModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

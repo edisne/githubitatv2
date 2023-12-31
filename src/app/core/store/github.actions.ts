@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../models/user';
+import { GitHubRepository } from '../models/repository';
 
 
 export const loadUsers = createAction(
@@ -42,4 +43,13 @@ export const loadUserSuccess = createAction(
   props<{ user: User }>()
 );
 
+export const loadRepositories = createAction(
+  '[GitHub API] Load Repositories',
+  props<{ username: string }>()
+);
+
+export const loadRepositoriesSuccess = createAction(
+  '[GitHub API] Load Repositories Success',
+  props<{ repositories: GitHubRepository[] }>()
+);
 

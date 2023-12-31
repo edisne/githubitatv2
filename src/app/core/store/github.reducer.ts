@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { loadUsers, loadGithubUsersSuccess, loadGithubUsersFailure, search, loadUser, loadUserSuccess, loadFollowers, loadFollowersSuccess} from './github.actions';
-import { FollowersState, GithubState, UserState } from '../interfaces/github-state';
+import { loadUsers, loadGithubUsersSuccess, loadGithubUsersFailure, search, loadUser, loadUserSuccess, loadFollowers, loadFollowersSuccess, loadRepositories, loadRepositoriesSuccess} from './github.actions';
+import { FollowersState, GithubState, RepositoryState, UserState } from '../interfaces/github-state';
 
 
 export const initialState : GithubState = {
@@ -65,6 +65,12 @@ export const initialFollowersState : FollowersState = {
   error: null
 };
 
+export const initialRepositoryState : RepositoryState = {
+  repositories: [],
+  loading: false,
+  error: null
+};
+
 
 export const githubReducer = createReducer(
   initialState,
@@ -84,4 +90,10 @@ export const followersReducer = createReducer(
   initialFollowersState,
   on(loadFollowers, state => ({ ...state, loading: true })),
   on(loadFollowersSuccess, (state, { followers }) => ({ ...state, loading: false, followers: followers })),
+);
+
+export const repositoriesReducer = createReducer(
+  initialRepositoryState,
+  on(loadRepositories, state => ({ ...state, loading: true })),
+  on(loadRepositoriesSuccess, (state, { repositories }) => ({ ...state, loading: false, repositories: repositories })),
 );
