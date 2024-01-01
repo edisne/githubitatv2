@@ -1,15 +1,14 @@
 <mat-card class="card" (click)="showUserDetails()">
-    <mat-card-header class="d-flex">
-        <div mat-card-avatar class="ps-5 pt-5">
+    <div class="user-card pt-3">
+        <div class="col-12 col-lg-6 text-center">
             <img [src]="user?.avatar_url" class="user-avatar" [alt]="user?.login">
         </div>
-        <div class="user-details ps-4 pt-5">
-            <mat-card-title>{{user?.login}}</mat-card-title>
-            <mat-card-subtitle class="user-sub-details">
-                <a mat-raised-button [href]="user?.html_url" target="_blank">Github page</a>
-            </mat-card-subtitle>
+        <div class="col-10 col-lg-6 text-center">
+            <div class="row justify-content-center p-3">{{user?.login}}</div>
+            <div class="row justify-content-center">
+                <a mat-raised-button [href]="user?.html_url" target="_blank" class="github-page">Github page</a>
+            </div>
         </div>
-      </mat-card-header>
-    <mat-card-title class="mt-5">{{user?.name}}</mat-card-title>
-    <mat-card-subtitle class="d-flex justify-content-end">{{user?.type}}</mat-card-subtitle>
+    </div>
+    <mat-card-subtitle class="d-flex justify-content-end mt-3">{{user?.type}}</mat-card-subtitle>
 </mat-card>

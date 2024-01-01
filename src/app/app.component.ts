@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { slideInAnimation } from './layout/animations';
 import { Observable, combineLatest, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -8,6 +8,7 @@ import {
   selectUserLoading,
   selectUsersLoading
 } from './core/store/github.selector';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,12 @@ import {
   styleUrls: ['./app.component.scss'],
   animations: [slideInAnimation]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
   isLoading$: Observable<boolean>;
   title = 'NovularExercise';
+  toggleControl = new FormControl(false);
+  isDarkSide : boolean = false;
 
   constructor(private store: Store,
     private cdRef: ChangeDetectorRef) {
@@ -33,6 +37,11 @@ export class AppComponent {
         loadingRepositories,
         loadingFollowers]) => loadingUsers || loadingUser || loadingRepositories || loadingFollowers)
     );
+  }
+  ngOnInit(): void {
+    this.toggleControl.valueChanges.subscribe(isDark => {
+      this.isDarkSide = isDark;
+   });
   }
 
   ngAfterViewChecked() {

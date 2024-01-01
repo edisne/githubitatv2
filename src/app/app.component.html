@@ -1,6 +1,18 @@
-<div [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
-    <div class="spinner-container" *ngIf="isLoading$ | async">
-        <mat-spinner diameter="60" color="primary" strokeWidth="3"></mat-spinner>
+<mat-toolbar color="primary" class="justify-content-end">
+    <button mat-icon-button routerLink="/"> 
+        <mat-icon>home</mat-icon>
+      </button>
+    <span class="spacer"></span>
+    <mat-icon class="me-3">brightness_5</mat-icon>
+    <mat-slide-toggle [formControl]="toggleControl" [color]="'accent'" class="me-3">
+    </mat-slide-toggle>
+    <mat-icon>bedtime</mat-icon>
+</mat-toolbar>
+<div class="content mat-app-background" [ngClass]="{'dark-side': isDarkSide}">
+    <div [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
+        <div class="spinner-container" *ngIf="isLoading$ | async">
+            <mat-spinner diameter="60" color="primary" strokeWidth="3"></mat-spinner>
+        </div>
+        <router-outlet #o="outlet"></router-outlet>
     </div>
-    <router-outlet #o="outlet"></router-outlet>
 </div>

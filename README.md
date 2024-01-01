@@ -6,22 +6,76 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Application Overview
+This application is a user-friendly platform that allows searching GitHub users by their username. It displays user profiles, including details and lists of repositories and followers. The application emphasizes responsive design, mobile optimization, and incorporates advanced features like dynamic theme switching, state management, and lazy loading.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Getting Started
+### Prerequisites
+- Node.js (LTS version)
+- Angular CLI
+- Git (for version control)
+### Installation
+Clone the repository:
+git clone <repository-url>
 
-## Build
+Navigate to the project directory:
+cd <project-name>
+Install dependencies:
+npm install
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Start the development server:
+ng serve
+The application will be available at http://localhost:4200/.
 
-## Running unit tests
+## Building the Application
+Development Build:
+ng build
+Production Build:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+ng build --prod
 
-## Running end-to-end tests
+## Application Features
+User Search Functionality:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Search bar on the homepage.
+Real-time search results as you type.
+User Details Page:
 
-## Further help
+Displays user details, repositories, and followers.
+Accessible by clicking on a user in the search results.
+Responsive Design:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Optimized for mobile and desktop viewing.
+Theming:
+Supports light and dark themes.
+Theme toggle implemented in the header.
+
+State Management:
+Utilizes NgRx for consistent state across the app.
+
+Lazy Loading:
+Modules are loaded dynamically to improve performance.
+
+Loading Indicators:
+Spinners indicate data loading.
+
+Error Handling:
+Interceptors catch and handle API errors.
+
+
+Animated Transitions:
+Smooth page transitions enhance the user experience.
+
+Unit Testing:
+Basic unit tests provided for key components.
+
+## Code Structure
+src/app: Main application folder.
+components: Reusable components.
+services: Angular services for API calls and state management.
+models: TypeScript models/interfaces.
+pages: Components representing pages.
+interceptors: HTTP interceptors.
+src/assets: Static assets like images and global styles.
+src/environments: Environment-specific configuration files.
+

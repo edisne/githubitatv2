@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import * as GithubActions from '../core/store/github.actions';
 import { selectGithubUsers } from '../core/store/github.selector';
 import { GithubService } from '../core/services/github.service';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { ToastService } from '../core/services/toast.service';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -20,6 +20,7 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
   pagination: Pagination | undefined;
   pageNumber = 1;
   pageSize = 10;
@@ -58,19 +59,8 @@ export class HomeComponent implements OnInit {
     this.users$ = this.store.select(selectGithubUsers);
   }
 
-  onClicked(user: User) {
-    // this.router.navigate(['todo/edit/', id]);
-  }
-
-  // pageChanged(event: PageChangedEvent) {
-  //   if (this.pageNumber !== event.page) {
-  //     this.pageNumber = event.page;
-  //     // this.store.dispatch(GithubActions.loadGithubUsers());
-  //   }
-  // }
-
-  onSelect() {
-    // this.loadTodos(); 
+  onSelect(event: MatAutocompleteSelectedEvent) {
+    this.router.navigate(['user/', event.option.value]);
   }
 
   pageChanged(event: PageEvent) {

@@ -1,3 +1,5 @@
+
+
 .profile-image {
     margin-top: 20px;
     height: 300px;
@@ -6,24 +8,43 @@
     border: 2px solid #ddd;
 }
 
+.tab-content {
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
 .following {
     display: flex;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .user-details-icon {
     margin-right: 5px;
 }
 
-.tab-content{
-    height: 600px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
+@media (max-width: 576px) {
+    .following {
+        flex-direction: column;
+    }
 
-.fab-button{
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
+    .following>div {
+        margin-bottom: 10px;
+    }
+
+    a {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .profile-image {
+        height: 200px;
+        width: 200px;
+    }
 }

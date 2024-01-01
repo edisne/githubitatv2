@@ -12,28 +12,90 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$NovularExercise-primary: mat.define-palette(mat.$pink-palette);
-$NovularExercise-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
+$theme-primary: mat.define-palette(mat.$teal-palette, 500, 100, 900);
+$theme-accent: mat.define-palette(mat.$indigo-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$NovularExercise-warn: mat.define-palette(mat.$red-palette);
+$theme-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$NovularExercise-theme: mat.define-light-theme((
+$light-theme: mat.define-light-theme((
   color: (
-    primary: $NovularExercise-primary,
-    accent: $NovularExercise-accent,
-    warn: $NovularExercise-warn,
+    primary: $theme-primary,
+    accent: $theme-accent,
+    warn: $theme-warn,
   )
 ));
+
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($NovularExercise-theme);
+@include mat.all-component-themes($light-theme);
+
+//Dark theme
+$dark-theme: mat.define-dark-theme((
+ color: (
+  primary: $theme-primary,
+  accent: $theme-accent,
+  warn: $theme-warn,
+ ),
+  typography: mat.define-typography-config(),
+  density: 0,
+));
+
+.dark-side{
+  @include mat.all-component-themes($dark-theme);
+}
+
 
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// You can define common colors as variables
+$success-color: green;
+$error-color: red;
+$white-color: white;
+
+.snackbar-success {
+  background-color: $success-color;
+  color: $white-color;
+}
+
+.snackbar-error {
+  background-color: $error-color;
+  color: $white-color;
+}
+
+.mat-simple-snackbar-action {
+  color: $white-color;
+  background-color: transparent;
+}
+
+mat-card {
+  margin: 5px;
+
+  &-title {
+    font-size: 17px;
+  }
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+mat-toolbar {
+  height: 50px !important;
+}
+

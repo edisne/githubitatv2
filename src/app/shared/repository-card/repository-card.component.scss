@@ -1,20 +1,21 @@
 .repo-stats {
     display: flex;
-}
-
-.repo-stats span {
-    display: flex;
-    align-items: center;
-    margin-right: 24px;
-}
-
-.repo-stats mat-icon {
-    margin-right: 4px;
-}
-
-.footer {
+  
+    span {
+      display: flex;
+      align-items: center;
+      margin-right: 24px;
+    }
+  
+    mat-icon {
+      margin-right: 4px;
+    }
+  }
+  
+  .footer {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
-}
+  }
+  
