@@ -1,7 +1,7 @@
 <mat-card class="card" (click)="showUserDetails()">
     <div class="user-card pt-3">
         <div class="col-12 col-lg-6 text-center">
-            <img [src]="user?.avatar_url" class="user-avatar" [alt]="user?.login">
+            <img [src]="user?.avatar_url" loading="lazy" class="user-avatar" [alt]="user?.login">
         </div>
         <div class="col-10 col-lg-6 text-center">
             <div class="row justify-content-center p-3">{{user?.login}}</div>
