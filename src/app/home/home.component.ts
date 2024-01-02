@@ -68,6 +68,7 @@ export class HomeComponent implements OnInit {
   }
 
   search(event: Event, trigger: MatAutocompleteTrigger) {
+    event.preventDefault();
     trigger.closePanel();
     this.store.dispatch(GithubActions.search({ username: this.searchControl.value }))
   }

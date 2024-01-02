@@ -6,10 +6,10 @@
                 <input type="text" placeholder="Type to search..." matInput [formControl]="searchControl"
                     [matAutocomplete]="auto" (keyup.enter)="search($event, autocomplete)"
                     #autocomplete="matAutocompleteTrigger">
-                <mat-icon matSuffix>search</mat-icon>
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelect($event)">
+                <mat-icon matSuffix class="search-icon" (click)="search($event, autocomplete)">search</mat-icon>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     <mat-option *ngFor="let option of searchResult$ | async" [value]="option?.login">
-                        {{option.login}}
+                        <a class="link" routerLink="user/{{option.login}}">{{option.login}}</a>
                     </mat-option>
                 </mat-autocomplete>
             </mat-form-field>
