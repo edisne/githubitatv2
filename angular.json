@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "NovularExercise": {
+    "Githubitat": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/NovularExercise",
+            "outputPath": "dist/Githubitat",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "NovularExercise:build:production"
+              "browserTarget": "Githubitat:build:production"
             },
             "development": {
-              "browserTarget": "NovularExercise:build:development"
+              "browserTarget": "Githubitat:build:development"
             }
           },
           "defaultConfiguration": "development",
@@ -87,7 +87,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "NovularExercise:build"
+            "browserTarget": "Githubitat:build"
           }
         },
         "test": {
@@ -111,5 +111,5 @@
       }
     }
   },
-  "defaultProject": "NovularExercise"
+  "defaultProject": "Githubitat"
 }
