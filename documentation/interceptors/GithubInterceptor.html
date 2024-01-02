@@ -86,87 +86,211 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content module">
+               <div class="content interceptor">
                    <div class="content-data">
 
 
 
+
+
+
+
+
+
 <ol class="breadcrumb">
-    <li class="breadcrumb-item">Modules</li>
-    <li class="breadcrumb-item" >AppRoutingModule</li>
+  <li class="breadcrumb-item">Interceptors</li>
+  <li class="breadcrumb-item" >GithubInterceptor</li>
 </ol>
 
-
 <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item">
-        <a href="#info" 
-            class="nav-link"
-            class="nav-link active"
-            role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
-    </li>
-    <li class="nav-item">
-        <a href="#source" 
-            class="nav-link"
-            
-            role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
-    </li>
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
 </ul>
 
 <div class="tab-content">
     <div class="tab-pane fade active in" id="info">
-
         <p class="comment">
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/app/app-routing.module.ts</code>
+            <code>src/app/core/interceptors/github.interceptor.ts</code>
         </p>
 
 
 
 
+            <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
 
-        <div class="container-fluid module">
-            <div class="row">
-            </div>
-        </div>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#intercept" >intercept</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
 
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section data-compodoc="block-constructor">
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="9" class="link-to-prism">src/app/core/interceptors/github.interceptor.ts:9</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="intercept"></a>
+                    <span class="name">
+                        <span ><b>intercept</b></span>
+                        <a href="#intercept"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>intercept(request: HttpRequest<any>, next: HttpHandler)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="13"
+                                    class="link-to-prism">src/app/core/interceptors/github.interceptor.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>request</td>
+                                            <td>
+                                                        <code>HttpRequest&lt;any&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>next</td>
+                                            <td>
+                                                        <code>HttpHandler</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { RouterModule, Routes } from &#x27;@angular/router&#x27;;
-import { HomeComponent } from &#x27;./home/home.component&#x27;;
-import { UserDetailsComponent } from &#x27;./users/user-details/user-details.component&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from &#x27;@angular/common/http&#x27;;
+import { Observable } from &#x27;rxjs&#x27;;
+import { environment } from &#x27;src/environments/environment&#x27;;
 
-const routes: Routes &#x3D; [
-  {
-    path: &#x27;&#x27;, component: HomeComponent
-  },
-  {
-    path: &#x27;search&#x27;, component: HomeComponent
-  },
-  {
-    path: &#x27;user/:username&#x27;,
-    loadChildren: () &#x3D;&gt; &quot;import(&#x27;./users/users.module&#x27;).then(m &#x3D;&gt; m.UsersModule)&quot;
-  },
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+@Injectable({
+  providedIn: &#x27;root&#x27;
 })
-export class AppRoutingModule { }
+export class GithubInterceptor implements HttpInterceptor {
+
+  constructor() { }
+
+  intercept(request: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+    const authToken &#x3D; environment.token
+
+    const authReq &#x3D; request.clone({
+      headers: request.headers.set(&#x27;Authorization&#x27;, &#x60;token  ${authToken}&#x60;)
+    });
+
+    return next.handle(authReq);
+  }
+}
 </code></pre>
     </div>
 </div>
-
-
-
-
-
 
 
 
@@ -204,8 +328,8 @@ export class AppRoutingModule { }
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'module';
-            var COMPODOC_CURRENT_PAGE_URL = 'AppRoutingModule.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interceptor';
+            var COMPODOC_CURRENT_PAGE_URL = 'GithubInterceptor.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

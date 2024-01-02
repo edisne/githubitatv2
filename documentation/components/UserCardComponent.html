@@ -373,7 +373,7 @@ export class UserCardComponent {
         <pre class="line-numbers"><code class="language-html">&lt;mat-card class&#x3D;&quot;card&quot; (click)&#x3D;&quot;showUserDetails()&quot;&gt;
     &lt;div class&#x3D;&quot;user-card pt-3&quot;&gt;
         &lt;div class&#x3D;&quot;col-12 col-lg-6 text-center&quot;&gt;
-            &lt;img [src]&#x3D;&quot;user?.avatar_url&quot; class&#x3D;&quot;user-avatar&quot; [alt]&#x3D;&quot;user?.login&quot;&gt;
+            &lt;img [src]&#x3D;&quot;user?.avatar_url&quot; loading&#x3D;&quot;lazy&quot; class&#x3D;&quot;user-avatar&quot; [alt]&#x3D;&quot;user?.login&quot;&gt;
         &lt;/div&gt;
         &lt;div class&#x3D;&quot;col-10 col-lg-6 text-center&quot;&gt;
             &lt;div class&#x3D;&quot;row justify-content-center p-3&quot;&gt;{{user?.login}}&lt;/div&gt;
@@ -437,7 +437,7 @@ export class UserCardComponent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><mat-card class="card" (click)="showUserDetails()">    <div class="user-card pt-3">        <div class="col-12 col-lg-6 text-center">            <img [src]="user?.avatar_url" class="user-avatar" [alt]="user?.login">        </div>        <div class="col-10 col-lg-6 text-center">            <div class="row justify-content-center p-3">{{user?.login}}</div>            <div class="row justify-content-center">                <a mat-raised-button [href]="user?.html_url" target="_blank" class="github-page">Github page</a>            </div>        </div>    </div>    <mat-card-subtitle class="d-flex justify-content-end mt-3">{{user?.type}}</mat-card-subtitle></mat-card></div>'
+        var COMPONENT_TEMPLATE = '<div><mat-card class="card" (click)="showUserDetails()">    <div class="user-card pt-3">        <div class="col-12 col-lg-6 text-center">            <img [src]="user?.avatar_url" loading="lazy" class="user-avatar" [alt]="user?.login">        </div>        <div class="col-10 col-lg-6 text-center">            <div class="row justify-content-center p-3">{{user?.login}}</div>            <div class="row justify-content-center">                <a mat-raised-button [href]="user?.html_url" target="_blank" class="github-page">Github page</a>            </div>        </div>    </div>    <mat-card-subtitle class="d-flex justify-content-end mt-3">{{user?.type}}</mat-card-subtitle></mat-card></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'HomeComponent', 'selector': 'app-home'},{'name': 'RepositoryCardComponent', 'selector': 'app-repository-card'},{'name': 'UserCardComponent', 'selector': 'app-user-card'},{'name': 'UserDetailsComponent', 'selector': 'app-user-details'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'UserCardComponent'};

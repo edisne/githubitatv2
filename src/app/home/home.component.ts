@@ -4,7 +4,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, skip, switchMap } from 'rxjs';
 import { Pagination } from '../core/interfaces/pagination';
 import { User } from '../core/models/user';
 import { GithubService } from '../core/services/github.service';
@@ -57,7 +57,8 @@ export class HomeComponent implements OnInit {
     });
 
     this.searchResult$ = this.searchControl.valueChanges.pipe(
-      debounceTime(600),
+      skip(1),
+      debounceTime(300),
       distinctUntilChanged(),
       filter(value => value && value.trim().length > 1),
       switchMap(value => this.githubService.searchUsers(value)),
@@ -79,17 +80,16 @@ export class HomeComponent implements OnInit {
     this.store.dispatch(GithubActions.loadUsers({ pageSize: this.pageSize, since: this.pagination?.currentPage! }))
   }
 
-  search(event: Event, trigger: MatAutocompleteTrigger) {
+  search(event: Event, value:string, trigger: MatAutocompleteTrigger) {
     event.preventDefault();
     trigger.closePanel();
     this.router.navigate(['/search'], 
       {
         relativeTo: this.activatedRoute,
-        queryParams: { username: this.searchControl.value },
+        queryParams: { username: value },
         queryParamsHandling: 'merge',
         replaceUrl: true
       }
     );
-    this.store.dispatch(GithubActions.search({ username: this.searchControl.value }))
   }
 }

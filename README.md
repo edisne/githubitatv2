@@ -1,6 +1,6 @@
 # Githubitat
 
-This is just a quick overview, detailed app documentation can be see using a comand 
+This is just a quick overview, detailed app documentation can be see using a command 
 
 `npm run compodoc:serve`
 
@@ -23,7 +23,7 @@ Clone the repository:
 git clone githubitat
 
 Navigate to the project directory:
-cd NuvolarExercise
+cd Githubitat
 Install dependencies:
 npm install
 
@@ -34,15 +34,17 @@ The application will be available at http://localhost:4200/.
 ## Building the Application
 Development Build:
 ng build
-Production Build:
 
+Production Build:
 ng build --prod
 
 ## Application Features
 User Search Functionality:
 Search bar on the homepage.
 Real-time search results as you type 
-(dev note: Because of Github API limitations when fetching users debounceTime,distinctUntilChanged and filter operators are used to filter/limit API calls) 
+(dev note: Because of Github API limitations when fetching users debounceTime,distinctUntilChanged and filter (with at least 2 characters) operators are used to filter/limit number of API calls)
+Search results are displayed on the same page after user hits enter
+Also, user has an option to click on the item in dropdown list to see details of selected user
 
 User Details Page:
 Displays user details, repositories, and followers.

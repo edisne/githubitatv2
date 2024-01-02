@@ -23,7 +23,7 @@
                                 <span>{{user.following | number}} following</span>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center" *ngIf="user.blog">
                             <mat-icon class="user-details-icon">web</mat-icon>
                             <a [href]="user.blog">{{user.blog}}</a>
                         </div>

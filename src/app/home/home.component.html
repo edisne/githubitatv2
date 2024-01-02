@@ -4,9 +4,10 @@
             <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Search</mat-label>
                 <input type="text" placeholder="Type to search..." matInput [formControl]="searchControl"
-                    [matAutocomplete]="auto" (keyup.enter)="search($event, autocomplete)"
+                    [matAutocomplete]="auto" (keyup.enter)="search($event, searchControl.value, autocomplete)"
                     #autocomplete="matAutocompleteTrigger">
-                <mat-icon matSuffix class="search-icon" (click)="search($event, autocomplete)">search</mat-icon>
+                <mat-icon matSuffix class="search-icon"
+                    (click)="search($event, searchControl.value, autocomplete)">search</mat-icon>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                     <mat-option *ngFor="let option of searchResult$ | async" [value]="option?.login">
                         <a class="link" routerLink="/user/{{option.login}}">{{option.login}}</a>
@@ -15,7 +16,6 @@
             </mat-form-field>
         </div>
     </div>
-
     <div class="row">
         <div class="col-12 col-md-4 mt-2" *ngFor="let user of users$ | async">
             <app-user-card [user]="user"></app-user-card>

@@ -138,6 +138,7 @@
     </p>
     <p class="comment">
                 <code>OnInit</code>
+                <code>AfterViewChecked</code>
     </p>
 
 
@@ -224,6 +225,9 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                <a href="#ngAfterViewChecked" >ngAfterViewChecked</a>
+                            </li>
+                            <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                         </ul>
@@ -244,7 +248,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(store: Store)</code>
+<code>constructor(store: Store, cdRef: ChangeDetectorRef)</code>
                     </td>
                 </tr>
                         <tr>
@@ -278,6 +282,18 @@
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>cdRef</td>
+                                                  
+                                                        <td>
+                                                                    <code>ChangeDetectorRef</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -300,6 +316,43 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="ngAfterViewChecked"></a>
+                    <span class="name">
+                        <span ><b>ngAfterViewChecked</b></span>
+                        <a href="#ngAfterViewChecked"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngAfterViewChecked()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="47"
+                                    class="link-to-prism">src/app/app.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
                         <span ><b>ngOnInit</b></span>
@@ -316,8 +369,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="40"
-                                    class="link-to-prism">src/app/app.component.ts:40</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="41"
+                                    class="link-to-prism">src/app/app.component.ts:41</a></div>
                         </td>
                     </tr>
 
@@ -458,17 +511,17 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, OnInit } from &#x27;@angular/core&#x27;;
-import { FormControl } from &#x27;@angular/forms&#x27;;
-import { Store, select } from &#x27;@ngrx/store&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from &#x27;@angular/core&#x27;;
+import { slideInAnimation } from &#x27;./layout/animations&#x27;;
 import { Observable, combineLatest, map } from &#x27;rxjs&#x27;;
+import { Store, select } from &#x27;@ngrx/store&#x27;;
 import {
   selectFollowersLoading,
   selectRepositoriesLoading,
   selectUserLoading,
   selectUsersLoading
 } from &#x27;./core/store/github.selector&#x27;;
-import { slideInAnimation } from &#x27;./layout/animations&#x27;;
+import { FormControl } from &#x27;@angular/forms&#x27;;
 
 @Component({
   selector: &#x27;app-root&#x27;,
@@ -476,14 +529,15 @@ import { slideInAnimation } from &#x27;./layout/animations&#x27;;
   styleUrls: [&#x27;./app.component.scss&#x27;],
   animations: [slideInAnimation]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewChecked{
 
   isLoading$: Observable&lt;boolean&gt;;
   title &#x3D; &#x27;Githubitat&#x27;;
   toggleControl &#x3D; new FormControl(false);
   isDarkSide : boolean &#x3D; false;
 
-  constructor(private store: Store) {
+  constructor(private store: Store,
+    private cdRef: ChangeDetectorRef) {
     this.isLoading$ &#x3D; combineLatest([
       this.store.pipe(select(selectUsersLoading)),
       this.store.pipe(select(selectUserLoading)),
@@ -501,6 +555,10 @@ export class AppComponent implements OnInit{
     this.toggleControl.valueChanges.subscribe(isDark &#x3D;&gt; {
       this.isDarkSide &#x3D; isDark;
    });
+  }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
   }
 }
 </code></pre>

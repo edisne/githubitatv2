@@ -180,7 +180,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">src/app/core/store/github.effects.ts:60</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/core/store/github.effects.ts:59</a></div>
                             </td>
                         </tr>
 
@@ -253,7 +253,6 @@
     ofType(GithubActions.loadFollowers),
     switchMap(action &#x3D;&gt;
       this.githubService.getUserFollowers(action.username).pipe(
-        tap(c &#x3D;&gt; console.log(c)),
         map(followers &#x3D;&gt; GithubActions.loadFollowersSuccess({ followers }))
       )
     )
@@ -294,7 +293,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/core/store/github.effects.ts:39</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/core/store/github.effects.ts:38</a></div>
                         </td>
                     </tr>
 
@@ -326,7 +325,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/app/core/store/github.effects.ts:30</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/core/store/github.effects.ts:29</a></div>
                         </td>
                     </tr>
 
@@ -396,7 +395,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/app/core/store/github.effects.ts:48</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/core/store/github.effects.ts:47</a></div>
                         </td>
                     </tr>
 
@@ -432,7 +431,6 @@ export class GithubEffects {
     ofType(GithubActions.loadFollowers),
     switchMap(action &#x3D;&gt;
       this.githubService.getUserFollowers(action.username).pipe(
-        tap(c &#x3D;&gt; console.log(c)),
         map(followers &#x3D;&gt; GithubActions.loadFollowersSuccess({ followers }))
       )
     )

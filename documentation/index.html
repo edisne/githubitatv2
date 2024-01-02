@@ -90,8 +90,8 @@
                    <div class="content-data">
 
 <h1>Githubitat</h1>
-<p>This is just a quick overview, detailed app documentation can be see using a comand </p>
-<p>npm run compodoc:serve</p>
+<p>This is just a quick overview, detailed app documentation can be see using a command </p>
+<p><code>npm run compodoc:serve</code></p>
 <p>This project was generated with <a href="https://github.com/angular/angular-cli">Angular CLI</a> version 13.3.5.</p>
 <h2>Development server</h2>
 <p>Run <code>ng serve</code> for a dev server. Navigate to <code>http://localhost:4200/</code>. The application will automatically reload if you change any of the source files.</p>
@@ -108,7 +108,7 @@
 <p>Clone the repository:
 git clone githubitat</p>
 <p>Navigate to the project directory:
-cd NuvolarExercise
+cd Githubitat
 Install dependencies:
 npm install</p>
 <p>Start the development server:
@@ -116,15 +116,17 @@ ng serve
 The application will be available at <a href="http://localhost:4200/">http://localhost:4200/</a>.</p>
 <h2>Building the Application</h2>
 <p>Development Build:
-ng build
-Production Build:</p>
-<p>ng build --prod</p>
+ng build</p>
+<p>Production Build:
+ng build --prod</p>
 <h2>Application Features</h2>
 <p>User Search Functionality:
 Search bar on the homepage.
-Real-time search results as you type.
-U
-ser Details Page:
+Real-time search results as you type 
+(dev note: Because of Github API limitations when fetching users debounceTime,distinctUntilChanged and filter (with at least 2 characters) operators are used to filter/limit number of API calls)
+Search results are displayed on the same page after user hits enter
+Also, user has an option to click on the item in dropdown list to see details of selected user</p>
+<p>User Details Page:
 Displays user details, repositories, and followers.
 Accessible by clicking on a user in the search results.</p>
 <p>Responsive Design:
@@ -144,15 +146,6 @@ Interceptors catch and handle API errors.</p>
 Smooth page transitions enhance the user experience.</p>
 <p>Unit Testing:
 Basic unit tests provided for key components.</p>
-<h2>Code Structure</h2>
-<p>src/app: Main application folder.
-components: Reusable components.
-services: Angular services for API calls and state management.
-models: TypeScript models/interfaces.
-pages: Components representing pages.
-interceptors: HTTP interceptors.
-src/assets: Static assets like images and global styles.
-src/environments: Environment-specific configuration files.</p>
 
 
 

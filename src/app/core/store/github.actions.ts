@@ -29,7 +29,7 @@ export const loadUsersFailure = createAction(
 );
 
 export const search = createAction(
-  '[GitHub API] Load Users',
+  '[GitHub API] Search Users',
   props<{ username: string }>()
 );
 
