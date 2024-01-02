@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'user/:username',
-    component: UserDetailsComponent,
+    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
   },
 ];
 

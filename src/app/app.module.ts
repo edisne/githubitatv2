@@ -40,14 +40,6 @@ import { UserDetailsComponent } from './users/user-details/user-details.componen
 import { RepositoryCardComponent } from './shared/repository-card/repository-card.component';
 import { GithubInterceptor } from './core/interceptors/github.interceptor';
 
-const routes: Routes = [
-  { path:'', component: HomeComponent},
-  {
-    path: 'user/:username',
-    loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
-  },
-];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +49,6 @@ const routes: Routes = [
     RepositoryCardComponent,
   ],
   imports: [
-    RouterModule.forRoot(routes),
     BrowserModule,
     StoreModule.forRoot({
       github: githubReducer,

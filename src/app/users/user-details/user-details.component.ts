@@ -32,9 +32,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
   ) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
   }
 
   ngOnInit(): void {
