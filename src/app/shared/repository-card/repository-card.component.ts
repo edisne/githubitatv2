@@ -6,7 +6,7 @@ import { GitHubRepository } from 'src/app/core/models/repository';
   templateUrl: './repository-card.component.html',
   styleUrls: ['./repository-card.component.scss']
 })
-export class RepositoryCardComponent  {
+export class RepositoryCardComponent {
 
   @Input() repository: GitHubRepository | undefined;
 

@@ -24,14 +24,14 @@ describe('ToastService', () => {
   it('should open a success snack bar when success is called', () => {
     const message = 'Success message';
     service.success(message);
-  
-    expect(snackBarSpy.open).toHaveBeenCalledWith(message, 'Close', {panelClass: ['snackbar-success'], duration: 2000});
+
+    expect(snackBarSpy.open).toHaveBeenCalledWith(message, 'Close', { panelClass: ['snackbar-success'], duration: 2000 });
   });
 
   it('should open an error snack bar when error is called', () => {
     const message = 'Error message';
     service.error(message);
-  
-    expect(snackBarSpy.open).toHaveBeenCalledWith(message, 'Close', {panelClass: ['snackbar-error'], duration: 2000});
+
+    expect(snackBarSpy.open).toHaveBeenCalledWith(message, 'Close', { panelClass: ['snackbar-error'], duration: 2000 });
   });
 });

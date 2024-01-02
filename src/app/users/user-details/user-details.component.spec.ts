@@ -40,7 +40,7 @@ describe('UserDetailsComponent', () => {
         },
       ],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(UserDetailsComponent);
     component = fixture.componentInstance;

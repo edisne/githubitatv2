@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription, switchMap, tap } from 'rxjs';
+import { Observable, Subscription, switchMap } from 'rxjs';
 import { GitHubRepository } from 'src/app/core/models/repository';
 import { User } from 'src/app/core/models/user';
 import { ToastService } from 'src/app/core/services/toast.service';
 import { loadFollowers, loadRepositories, loadUser } from 'src/app/core/store/github.actions';
-import { selectGitubUser, selectGithubFollowers, selectGithubRepositories } from 'src/app/core/store/github.selector';
+import { selectGithubFollowers, selectGithubRepositories, selectGitubUser } from 'src/app/core/store/github.selector';
 import { slideInAnimation } from 'src/app/layout/animations';
 
 @Component({

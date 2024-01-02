@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, switchMap } from 'rxjs';
-import { User } from '../core/models/user';
-import { Pagination } from '../core/interfaces/pagination';
-import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, switchMap } from 'rxjs';
+import { Pagination } from '../core/interfaces/pagination';
+import { User } from '../core/models/user';
+import { GithubService } from '../core/services/github.service';
+import { ToastService } from '../core/services/toast.service';
 import * as GithubActions from '../core/store/github.actions';
 import { selectGithubUsers } from '../core/store/github.selector';
-import { GithubService } from '../core/services/github.service';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { ToastService } from '../core/services/toast.service';
-import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -26,7 +25,7 @@ export class HomeComponent implements OnInit {
   pageSize = 12;
   searchControl = new FormControl();
   searchTerm: string = '';
-  searchResult$ : Observable<User[]> | undefined;
+  searchResult$: Observable<User[]> | undefined;
 
   users$: Observable<User[]> = new Observable;
 
@@ -35,13 +34,13 @@ export class HomeComponent implements OnInit {
     private store: Store,
     private githubService: GithubService,
     private toast: ToastService
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.pagination = {
-      totalItems :300,
-      currentPage : 1,
-      itemsPerPage : 12,
+      totalItems: 300,
+      currentPage: 1,
+      itemsPerPage: 12,
     }
     this.searchResult$ = this.searchControl.valueChanges.pipe(
       debounceTime(600),
@@ -54,7 +53,7 @@ export class HomeComponent implements OnInit {
         return of([]);
       })
     );
-    this.store.dispatch(GithubActions.loadUsers({pageSize: this.pagination.itemsPerPage, since: 0}));
+    this.store.dispatch(GithubActions.loadUsers({ pageSize: this.pagination.itemsPerPage, since: 0 }));
     this.users$ = this.store.select(selectGithubUsers);
   }
 
@@ -65,11 +64,11 @@ export class HomeComponent implements OnInit {
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.pagination!.currentPage = event.pageSize * event.pageIndex;
-    this.store.dispatch(GithubActions.loadUsers({pageSize: this.pageSize, since: this.pagination?.currentPage!}))
+    this.store.dispatch(GithubActions.loadUsers({ pageSize: this.pageSize, since: this.pagination?.currentPage! }))
   }
 
   search(event: Event, trigger: MatAutocompleteTrigger) {
     trigger.closePanel();
-    this.store.dispatch(GithubActions.search({username : this.searchControl.value}))
+    this.store.dispatch(GithubActions.search({ username: this.searchControl.value }))
   }
 }

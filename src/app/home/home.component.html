@@ -4,8 +4,8 @@
             <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Search</mat-label>
                 <input type="text" placeholder="Type to search..." matInput [formControl]="searchControl"
-                    [matAutocomplete]="auto"
-                    (keyup.enter)="search($event, autocomplete)" #autocomplete="matAutocompleteTrigger">
+                    [matAutocomplete]="auto" (keyup.enter)="search($event, autocomplete)"
+                    #autocomplete="matAutocompleteTrigger">
                 <mat-icon matSuffix>search</mat-icon>
                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelect($event)">
                     <mat-option *ngFor="let option of searchResult$ | async" [value]="option?.login">
@@ -23,11 +23,7 @@
     </div>
 </div>
 <div class="d-flex justify-content-center paginator pt-3" *ngIf="pagination">
-    <mat-paginator
-              [length]="pagination.totalItems"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[12, 24, 48]"
-              aria-label="Select page"
-              (page)="pageChanged($event)">
-</mat-paginator>
+    <mat-paginator [length]="pagination.totalItems" [pageSize]="pageSize" [pageSizeOptions]="[12, 24, 48]"
+        aria-label="Select page" (page)="pageChanged($event)">
+    </mat-paginator>
 </div>

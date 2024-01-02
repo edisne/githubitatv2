@@ -4,7 +4,7 @@ import { User } from "../models/user";
 export interface GithubState {
     users: User[];
     loading: boolean;
-    error: any; 
+    error: any;
 }
 
 export interface UserState {
@@ -15,11 +15,11 @@ export interface UserState {
 export interface FollowersState {
     followers: User[];
     loading: boolean;
-    error: any; 
+    error: any;
 }
 
 export interface RepositoryState {
     repositories: GitHubRepository[];
     loading: boolean;
-    error: any; 
+    error: any;
 }

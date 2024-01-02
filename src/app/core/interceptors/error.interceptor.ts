@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
+  HttpErrorResponse,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
-  HttpErrorResponse
+  HttpRequest
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { ToastService } from '../services/toast.service';
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/core/models/user';
 
@@ -11,7 +11,7 @@ export class UserCardComponent {
 
   @Input() user: User | undefined;
 
-  constructor(private router: Router){}
+  constructor(private router: Router) { }
 
   showUserDetails() {
     this.router.navigate(['user/', this.user?.login]);

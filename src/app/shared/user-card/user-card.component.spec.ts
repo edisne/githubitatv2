@@ -15,12 +15,12 @@ describe('UserCardComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [ UserCardComponent ],
+      declarations: [UserCardComponent],
       providers: [
         { provide: Router, useValue: routerMock }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -82,7 +82,7 @@ describe('UserCardComponent', () => {
     };
     component.user = testUser;
     fixture.detectChanges();
-  
+
     expect(component.user).toBe(testUser);
   });
 });

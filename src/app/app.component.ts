@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { slideInAnimation } from './layout/animations';
 import { Observable, combineLatest, map } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -16,7 +16,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./app.component.scss'],
   animations: [slideInAnimation]
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewChecked{
 
   isLoading$: Observable<boolean>;
   title = 'Githubitat';

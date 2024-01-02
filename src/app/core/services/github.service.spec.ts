@@ -11,8 +11,8 @@ describe('GithubService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports:[HttpClientTestingModule],
-      providers:[GithubService]
+      imports: [HttpClientTestingModule],
+      providers: [GithubService]
     });
     service = TestBed.inject(GithubService);
     httpMock = TestBed.inject(HttpTestingController);
@@ -22,7 +22,7 @@ describe('GithubService', () => {
 
 
   it('should call the correct URL to search users', () => {
-    const mockResponse : User[] = [];
+    const mockResponse: User[] = [];
     const username = 'testuser';
 
     service.searchUsers(username).subscribe(users => {
@@ -35,14 +35,14 @@ describe('GithubService', () => {
   })
 
   it('should call the correct URL to get users', () => {
-    const mockResponse : User[] = [];
+    const mockResponse: User[] = [];
     const pageSize = 10;
     const since = 100;
-  
+
     service.getUsers(pageSize, since).subscribe(users => {
       expect(users).toEqual(mockResponse);
     });
-  
+
     const req = httpMock.expectOne(`${environment.baseUrl}/users?since=${since}&per_page=${pageSize}`);
     expect(req.request.method).toBe('GET');
     req.flush(mockResponse);
@@ -50,7 +50,7 @@ describe('GithubService', () => {
 
   it('should fetch user details', () => {
     const username = 'testuser';
-    const mockUser : User = {
+    const mockUser: User = {
       login: 'test',
       id: 0,
       node_id: '',
@@ -96,12 +96,12 @@ describe('GithubService', () => {
         collaborators: 0
       }
     };
-  
-    service.getUserDetails(username).subscribe((user:User) => {
+
+    service.getUserDetails(username).subscribe((user: User) => {
       expect(user).toEqual(mockUser);
       expect(user.login).toMatch('test');
     });
-  
+
     const req = httpMock.expectOne(`${environment.baseUrl}/users/${username}`);
     expect(req.request.method).toBe('GET');
     req.flush(mockUser);
@@ -109,12 +109,12 @@ describe('GithubService', () => {
 
   it('should fetch user repositories', () => {
     const username = 'testuser';
-    const mockRepos : GitHubRepository[] = [];
-  
+    const mockRepos: GitHubRepository[] = [];
+
     service.getUserRepos(username).subscribe(repos => {
       expect(repos).toEqual(mockRepos);
     });
-  
+
     const req = httpMock.expectOne(`${environment.baseUrl}/users/${username}/repos`);
     expect(req.request.method).toBe('GET');
     req.flush(mockRepos);
@@ -123,11 +123,11 @@ describe('GithubService', () => {
   it('should fetch user followers', () => {
     const username = 'testuser';
     const mockFollowers: User[] = [];
-  
+
     service.getUserFollowers(username).subscribe(followers => {
       expect(followers).toEqual(mockFollowers);
     });
-  
+
     const req = httpMock.expectOne(`${environment.baseUrl}/users/${username}/followers`);
     expect(req.request.method).toBe('GET');
     req.flush(mockFollowers);

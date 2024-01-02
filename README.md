@@ -1,4 +1,8 @@
-# Novular Exercise
+# Githubitat
+
+This is just a quick overview, detailed app documentation can be see using a comand 
+
+`npm run compodoc:serve`
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
@@ -16,7 +20,7 @@ This application is a user-friendly platform that allows searching GitHub users 
 - Git (for version control)
 ### Installation
 Clone the repository:
-git clone <repository-url>
+git clone githubitat
 
 Navigate to the project directory:
 cd NuvolarExercise
@@ -36,16 +40,17 @@ ng build --prod
 
 ## Application Features
 User Search Functionality:
-
 Search bar on the homepage.
-Real-time search results as you type.
-User Details Page:
+Real-time search results as you type 
+(dev note: Because of Github API limitations when fetching users debounceTime,distinctUntilChanged and filter operators are used to filter/limit API calls) 
 
+User Details Page:
 Displays user details, repositories, and followers.
 Accessible by clicking on a user in the search results.
-Responsive Design:
 
+Responsive Design:
 Optimized for mobile and desktop viewing.
+
 Theming:
 Supports light and dark themes.
 Theme toggle implemented in the header.
@@ -62,20 +67,9 @@ Spinners indicate data loading.
 Error Handling:
 Interceptors catch and handle API errors.
 
-
 Animated Transitions:
 Smooth page transitions enhance the user experience.
 
 Unit Testing:
 Basic unit tests provided for key components.
-
-## Code Structure
-src/app: Main application folder.
-components: Reusable components.
-services: Angular services for API calls and state management.
-models: TypeScript models/interfaces.
-pages: Components representing pages.
-interceptors: HTTP interceptors.
-src/assets: Static assets like images and global styles.
-src/environments: Environment-specific configuration files.
 

@@ -6,13 +6,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ToastService {
 
-  constructor(private snackbar : MatSnackBar) { }
+  constructor(private snackbar: MatSnackBar) { }
 
-  success (message : string) {
-    this.snackbar.open(message, "Close", {panelClass: ['snackbar-success'], duration: 2000})
+  success(message: string) {
+    this.snackbar.open(message, "Close", { panelClass: ['snackbar-success'], duration: 2000 })
   }
 
-  error (message: string) {
-    this.snackbar.open(message, "Close", {panelClass: ['snackbar-error'], duration: 2000})
+  error(message: string) {
+    this.snackbar.open(message, "Close", { panelClass: ['snackbar-error'], duration: 2000 })
   }
 }

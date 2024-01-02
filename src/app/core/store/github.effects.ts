@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
-import { switchMap, map, catchError, tap, filter } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { GithubService } from '../services/github.service';
 import * as GithubActions from './github.actions';
 
@@ -21,7 +21,6 @@ export class GithubEffects {
     ofType(GithubActions.loadFollowers),
     switchMap(action =>
       this.githubService.getUserFollowers(action.username).pipe(
-        tap(c => console.log(c)),
         map(followers => GithubActions.loadFollowersSuccess({ followers }))
       )
     )
@@ -45,9 +44,9 @@ export class GithubEffects {
     )
   ));
 
-  searchUsers$ = createEffect(()=> this.actions$.pipe(
+  searchUsers$ = createEffect(() => this.actions$.pipe(
     ofType(GithubActions.search),
-    switchMap( action => {
+    switchMap(action => {
       if (action.username && action.username.trim().length > 0) {
         return this.githubService.searchUsers(action.username).pipe(
           map(u => GithubActions.loadUsersSuccess({ users: u.items })),
