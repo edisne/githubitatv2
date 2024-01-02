@@ -1,3 +1,5 @@
+import { Location } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -21,12 +23,14 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   repositories$ = new Observable<GitHubRepository[]>();
   private routeParamSubscription: Subscription | undefined;
   animateState: string = '';
+  activeTabIndex: number = 0;
 
   constructor(
     private store: Store,
     private route: ActivatedRoute,
     private toast: ToastService,
     private router: Router,
+    private location: Location,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -43,8 +47,12 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     ).subscribe(username => {
       if (username) {
         this.store.dispatch(loadUser({ username }));
-        this.store.dispatch(loadFollowers({ username }));
-        this.store.dispatch(loadRepositories({ username }));
+        this.route.queryParams.subscribe(params => {
+          if (params['tab']) {
+            this.activeTabIndex = parseInt(params['tab'], 10);
+          } 
+          this.onTabChange(this.activeTabIndex);
+        });
       } else {
         this.toast.error('Error loading user');
       }
@@ -56,7 +64,20 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   showUserDetails(user: User) {
-    this.router.navigate(['user/', user.login]);
+    this.router.navigate(['/user', user.login]);
+  }
+
+  onTabChange(tabIndex: number) {
+    const username = this.animateState;
+    tabIndex === 0 
+      ? this.store.dispatch(loadRepositories({ username })) 
+      : this.store.dispatch(loadFollowers({ username }));
+    const url = this.location.path();
+    const urlWithoutParams = url.split('?')[0];
+    let currentParams = new HttpParams({ fromString: url.split('?')[1] });
+    currentParams = currentParams.set('tab', tabIndex);
+    const newUrl = urlWithoutParams + '?' + currentParams.toString();
+    this.location.go(newUrl);
   }
 
   ngOnDestroy(): void {

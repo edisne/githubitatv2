@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, switchMap } from 'rxjs';
 import { Pagination } from '../core/interfaces/pagination';
@@ -20,7 +20,11 @@ import { selectGithubUsers } from '../core/store/github.selector';
 })
 export class HomeComponent implements OnInit {
 
-  pagination: Pagination | undefined;
+  pagination = {
+    totalItems: 300,
+    currentPage: 1,
+    itemsPerPage: 12,
+  }
   pageNumber = 1;
   pageSize = 12;
   searchControl = new FormControl();
@@ -33,15 +37,25 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private store: Store,
     private githubService: GithubService,
-    private toast: ToastService
-  ) { }
+    private toast: ToastService,
+    private activatedRoute: ActivatedRoute
+  ) { 
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+  }
 
   ngOnInit(): void {
-    this.pagination = {
-      totalItems: 300,
-      currentPage: 1,
-      itemsPerPage: 12,
-    }
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params['username']) {
+        this.store.dispatch(GithubActions.search({ username: params['username'] }));
+      }
+      else {
+        this.store.dispatch(GithubActions.loadUsers({ pageSize: this.pagination.itemsPerPage, since: 0 }));
+      }
+      this.users$ = this.store.select(selectGithubUsers);
+    });
+
     this.searchResult$ = this.searchControl.valueChanges.pipe(
       debounceTime(600),
       distinctUntilChanged(),
@@ -53,8 +67,6 @@ export class HomeComponent implements OnInit {
         return of([]);
       })
     );
-    this.store.dispatch(GithubActions.loadUsers({ pageSize: this.pagination.itemsPerPage, since: 0 }));
-    this.users$ = this.store.select(selectGithubUsers);
   }
 
   onSelect(event: MatAutocompleteSelectedEvent) {
@@ -70,6 +82,14 @@ export class HomeComponent implements OnInit {
   search(event: Event, trigger: MatAutocompleteTrigger) {
     event.preventDefault();
     trigger.closePanel();
+    this.router.navigate(['/search'], 
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: { username: this.searchControl.value },
+        queryParamsHandling: 'merge',
+        replaceUrl: true
+      }
+    );
     this.store.dispatch(GithubActions.search({ username: this.searchControl.value }))
   }
 }
