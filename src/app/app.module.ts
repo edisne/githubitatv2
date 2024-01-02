@@ -38,6 +38,7 @@ import { GithubEffects } from './core/store/github.effects';
 import { UserCardComponent } from './shared/user-card/user-card.component';
 import { UserDetailsComponent } from './users/user-details/user-details.component';
 import { RepositoryCardComponent } from './shared/repository-card/repository-card.component';
+import { GithubInterceptor } from './core/interceptors/github.interceptor';
 
 const routes: Routes = [
   { path:'', component: HomeComponent},
@@ -92,7 +93,8 @@ const routes: Routes = [
     MatSlideToggleModule,
 ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: GithubInterceptor, multi: true },
 ],
   bootstrap: [AppComponent]
 })
