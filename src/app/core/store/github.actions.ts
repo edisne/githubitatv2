@@ -18,12 +18,12 @@ export const loadFollowersSuccess = createAction(
   props<{ followers: User[] }>()
 );
 
-export const loadGithubUsersSuccess = createAction(
+export const loadUsersSuccess = createAction(
   '[GitHub API] Load Users Success',
   props<{ users: User[] }>()
 );
 
-export const loadGithubUsersFailure = createAction(
+export const loadUsersFailure = createAction(
   '[GitHub API] Load Users Failure',
   props<{ error: any }>()
 );

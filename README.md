@@ -19,7 +19,7 @@ Clone the repository:
 git clone <repository-url>
 
 Navigate to the project directory:
-cd <project-name>
+cd NuvolarExercise
 Install dependencies:
 npm install
 

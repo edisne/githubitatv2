@@ -1,3 +1,15 @@
 .spacer {
-    flex: 1 1 auto;
-  }
+  flex: 1 1 auto;
+}
+
+mat-sidenav-container{
+  min-height: 100vh;
+}
+
+mat-sidenav-content{
+  min-height: 100vh;
+}
+
+.slide-animation{
+  min-height: 100vh;
+}

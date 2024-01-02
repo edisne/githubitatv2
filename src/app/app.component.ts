@@ -19,7 +19,7 @@ import { FormControl } from '@angular/forms';
 export class AppComponent implements OnInit{
 
   isLoading$: Observable<boolean>;
-  title = 'NovularExercise';
+  title = 'Githubitat';
   toggleControl = new FormControl(false);
   isDarkSide : boolean = false;
 

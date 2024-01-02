@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   pagination: Pagination | undefined;
   pageNumber = 1;
-  pageSize = 10;
+  pageSize = 12;
   searchControl = new FormControl();
   searchTerm: string = '';
   searchResult$ : Observable<User[]> | undefined;
@@ -41,8 +41,7 @@ export class HomeComponent implements OnInit {
     this.pagination = {
       totalItems :300,
       currentPage : 1,
-      itemsPerPage : 10,
-      totalPages : 10,
+      itemsPerPage : 12,
     }
     this.searchResult$ = this.searchControl.valueChanges.pipe(
       debounceTime(600),
@@ -55,7 +54,7 @@ export class HomeComponent implements OnInit {
         return of([]);
       })
     );
-    this.store.dispatch(GithubActions.loadUsers({pageSize: 10, since: 0}));
+    this.store.dispatch(GithubActions.loadUsers({pageSize: this.pagination.itemsPerPage, since: 0}));
     this.users$ = this.store.select(selectGithubUsers);
   }
 

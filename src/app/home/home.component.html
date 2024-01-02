@@ -22,11 +22,11 @@
         </div>
     </div>
 </div>
-<div class="d-flex justify-content-center paginator" *ngIf="pagination">
+<div class="d-flex justify-content-center paginator pt-3" *ngIf="pagination">
     <mat-paginator
               [length]="pagination.totalItems"
               [pageSize]="pageSize"
-              [pageSizeOptions]="[10, 20, 30]"
+              [pageSizeOptions]="[12, 24, 48]"
               aria-label="Select page"
               (page)="pageChanged($event)">
 </mat-paginator>

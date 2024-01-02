@@ -11,8 +11,8 @@ export class GithubEffects {
     ofType(GithubActions.loadUsers),
     switchMap(action =>
       this.githubService.getUsers(action.pageSize, action.since).pipe(
-        map(users => GithubActions.loadGithubUsersSuccess({ users })),
-        catchError(error => of(GithubActions.loadGithubUsersFailure({ error })))
+        map(users => GithubActions.loadUsersSuccess({ users })),
+        catchError(error => of(GithubActions.loadUsersFailure({ error })))
       )
     )
   ));
@@ -50,7 +50,7 @@ export class GithubEffects {
     switchMap( action => {
       if (action.username && action.username.trim().length > 0) {
         return this.githubService.searchUsers(action.username).pipe(
-          map(u => GithubActions.loadGithubUsersSuccess({ users: u.items })),
+          map(u => GithubActions.loadUsersSuccess({ users: u.items })),
         )
       }
       else {

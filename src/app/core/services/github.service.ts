@@ -13,7 +13,7 @@ export class GithubService {
   constructor(private http: HttpClient) {}
 
   searchUsers(username: string): Observable<any> {
-    return this.http.get<User[]>(`${this.apiUrl}/search/users?q=${username}&per_page=12`);
+    return this.http.get<User[]>(`${this.apiUrl}/search/users?q=${username}`);
   }
 
   getUsers(pageSize: number, since: number): Observable<any> {

@@ -1,13 +1,13 @@
 import { createSelector } from '@ngrx/store';
 import { FollowersState, GithubState, RepositoryState, UserState } from '../interfaces/github-state';
 
-export const selectGithubFeature = (state: any) => state.github;
+export const selectUsersFeature = (state: any) => state.github;
 export const selectUserFeature = (state: any) => state.user;
 export const selectUserFollowers = (state: any) => state.followers;
 export const selectUserRepositories = (state: any) => state.repositories;
 
 export const selectGithubUsers = createSelector(
-  selectGithubFeature,
+  selectUsersFeature,
   (state: GithubState) => state.users,
 );
 
@@ -27,7 +27,7 @@ export const selectGithubRepositories = createSelector(
 );
 
 export const selectUsersLoading = createSelector(
-  selectGithubFeature,
+  selectUsersFeature,
   (state: GithubState) => state.loading
 );
 

@@ -25,9 +25,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSidenavModule} from '@angular/material/sidenav'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { StoreModule } from '@ngrx/store';
@@ -87,11 +88,12 @@ const routes: Routes = [
     MatDividerModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
+    MatSidenavModule,
     MatSlideToggleModule,
-  ],
+],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-  ],
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
