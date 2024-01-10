@@ -1,9 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { GithubService } from './github.service';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { GitHubRepository } from '../models/repository';
+
+/**
+ * Generate code coverage using comand `ng test --no-watch --code-coverage`
+ * CLI needs to be installe globaly
+ * This creates a new folder with report, opening index.html we can see coverage report
+ */
 
 describe('GithubService', () => {
   let service: GithubService;
@@ -18,7 +24,7 @@ describe('GithubService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => httpMock.verify());
+  afterEach(() => httpMock.verify()); // verifies that only api request we specified and requested are actually called
 
 
   it('should call the correct URL to search users', () => {
@@ -28,10 +34,16 @@ describe('GithubService', () => {
     service.searchUsers(username).subscribe(users => {
       expect(users).toEqual(mockResponse);
     })
+    // fakeAsync() - wrapping this function above could simulate asny
+    // tick(2500) - making test callback to be treated sync (so like time passed)
+    // flush() - if we don't know how long should we be waiting, 
+    //           if there are any task waiting go and fast forward the clock until those
+    //           waiting task have been executed
 
-    const req = httpMock.expectOne(`${environment.baseUrl}/search/users?q=${username}`);
+
+    const req = httpMock.expectOne(`${environment.baseUrl}/search/users?q=${username}`); //what URL are we expecting to be called
     expect(req.request.method).toBe('GET');
-    req.flush(mockResponse);
+    req.flush(mockResponse); //flush let us deside what data gets send back when the call is made
   })
 
   it('should call the correct URL to get users', () => {

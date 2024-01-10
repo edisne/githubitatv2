@@ -7,9 +7,12 @@ import { Observable, Subscription, switchMap } from 'rxjs';
 import { GitHubRepository } from 'src/app/core/models/repository';
 import { User } from 'src/app/core/models/user';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { loadFollowers, loadRepositories, loadUser } from 'src/app/core/store/github.actions';
-import { selectGithubFollowers, selectGithubRepositories, selectGitubUser } from 'src/app/core/store/github.selector';
+import { loadFollowers, loadRepositories } from 'src/app/core/store/github.actions';
+import { selectGithubFollowers, selectGithubRepositories } from 'src/app/core/store/github.selector';
 import { slideInAnimation } from 'src/app/layout/animations';
+import { loadUser } from '../state/user.acctions';
+import { userSuccess } from '../state/user.selectors';
+import { State } from '../state/user.reducers';
 
 @Component({
   selector: 'app-user-details',
@@ -22,11 +25,11 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   followers$ = new Observable<User[]>();
   repositories$ = new Observable<GitHubRepository[]>();
   private routeParamSubscription: Subscription | undefined;
-  animateState: string = '';
+  username: string = '';
   activeTabIndex: number = 0;
 
   constructor(
-    private store: Store,
+    private store: Store<State>,
     private route: ActivatedRoute,
     private toast: ToastService,
     private router: Router,
@@ -38,7 +41,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     this.routeParamSubscription = this.route.paramMap.pipe(
       switchMap(params => {
         const username = params.get('username');
-        this.animateState = username!;
+        this.username = username!;
         return username ? [username] : [];
       })
     ).subscribe(username => {
@@ -55,7 +58,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.user$ = this.store.select(selectGitubUser);
+    this.user$ = this.store.select(userSuccess);
     this.followers$ = this.store.select(selectGithubFollowers);
     this.repositories$ = this.store.select(selectGithubRepositories)
   }
@@ -65,10 +68,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   onTabChange(tabIndex: number) {
-    const username = this.animateState;
     tabIndex === 0 
-      ? this.store.dispatch(loadRepositories({ username })) 
-      : this.store.dispatch(loadFollowers({ username }));
+      ? this.store.dispatch(loadRepositories(this.username)) 
+      : this.store.dispatch(loadFollowers({ username : this.username }));
     const url = this.location.path();
     const urlWithoutParams = url.split('?')[0];
     let currentParams = new HttpParams({ fromString: url.split('?')[1] });

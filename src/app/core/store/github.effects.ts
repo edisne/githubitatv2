@@ -26,15 +26,6 @@ export class GithubEffects {
     )
   ));
 
-  loadUser$ = createEffect(() => this.actions$.pipe(
-    ofType(GithubActions.loadUser),
-    switchMap(action =>
-      this.githubService.getUserDetails(action.username).pipe(
-        map(user => GithubActions.loadUserSuccess({ user }))
-      )
-    )
-  ));
-
   loadRepositories$ = createEffect(() => this.actions$.pipe(
     ofType(GithubActions.loadRepositories),
     switchMap(action =>

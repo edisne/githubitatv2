@@ -1,14 +1,15 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { slideInAnimation } from './layout/animations';
 import { Observable, combineLatest, map } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
   selectFollowersLoading,
   selectRepositoriesLoading,
-  selectUserLoading,
-  selectUsersLoading
+  usersLoading
 } from './core/store/github.selector';
 import { FormControl } from '@angular/forms';
+import { userLoading } from './users/state/user.selectors';
+import { State } from './users/state/user.reducers';
 
 @Component({
   selector: 'app-root',
@@ -23,13 +24,13 @@ export class AppComponent implements OnInit, AfterViewChecked{
   toggleControl = new FormControl(false);
   isDarkSide : boolean = false;
 
-  constructor(private store: Store,
+  constructor(private store: Store<State>,
     private cdRef: ChangeDetectorRef) {
     this.isLoading$ = combineLatest([
-      this.store.pipe(select(selectUsersLoading)),
-      this.store.pipe(select(selectUserLoading)),
-      this.store.pipe(select(selectRepositoriesLoading)),
-      this.store.pipe(select(selectFollowersLoading)),
+      this.store.select(usersLoading),
+      this.store.select(userLoading),
+      this.store.select(selectRepositoriesLoading),
+      this.store.select(selectFollowersLoading),
     ]).pipe(
       map(([
         loadingUsers,

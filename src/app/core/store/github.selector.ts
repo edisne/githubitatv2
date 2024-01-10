@@ -1,47 +1,70 @@
-import { createSelector } from '@ngrx/store';
-import { FollowersState, GithubState, RepositoryState, UserState } from '../interfaces/github-state';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { FollowersState } from '../interfaces/followers-state';
+import { RepositoryState } from '../interfaces/repository-state';
+import { UsersState } from '../interfaces/users-state';
+import { FOLLOWERS_FEATURE_KEY, REPOSITORIES_FEATURE_KEY, State, USERS_FEATURE_KEY } from '../interfaces/app.state';
+import { calculateTotalFollowers } from '../models/user';
 
-export const selectUsersFeature = (state: any) => state.github;
-export const selectUserFeature = (state: any) => state.user;
-export const selectUserFollowers = (state: any) => state.followers;
-export const selectUserRepositories = (state: any) => state.repositories;
+// export const selectUsersState = (state: State) => state.usersState;
+// export const SelectFollowersState = (state: State) => state.followersState;
+// export const selectRepositoriesState = (state: State) => state.repositoriesState;
 
-export const selectGithubUsers = createSelector(
-  selectUsersFeature,
-  (state: GithubState) => state.users,
+const getUsersFeatureState = createFeatureSelector<UsersState>(USERS_FEATURE_KEY); //Feature selector
+const getRepositoriesState = createFeatureSelector<RepositoryState>(REPOSITORIES_FEATURE_KEY); //Feature selector
+const getFollowersState = createFeatureSelector<FollowersState>(FOLLOWERS_FEATURE_KEY); //Feature selector
+/**
+ * Selector can be viewed as view model mapper
+ */
+
+export const getUsers = createSelector(
+  getUsersFeatureState,
+  (state: UsersState) => state.users,
 );
 
-export const selectGitubUser = createSelector(
-  selectUserFeature,
-  (state: UserState) => state.user,
+export const usersLoading = createSelector(
+  getUsersFeatureState,
+  (state: UsersState) => state.loading
+);
+
+export const usersError = createSelector(
+  getUsersFeatureState,
+  (state: UsersState) => state.error,
 );
 
 export const selectGithubFollowers = createSelector(
-  selectUserFollowers,
+  getFollowersState,
   (state: FollowersState) => state.followers,
 );
 
+export const selectFollowersLoading = createSelector(
+  getFollowersState,
+  (state: FollowersState) => state.loading
+);
+
 export const selectGithubRepositories = createSelector(
-  selectUserRepositories,
+  getRepositoriesState,
   (state: RepositoryState) => state.repositories,
 );
 
-export const selectUsersLoading = createSelector(
-  selectUsersFeature,
-  (state: GithubState) => state.loading
-);
-
-export const selectUserLoading = createSelector(
-  selectUserFeature,
-  (state: UserState) => state.loading
-);
-
 export const selectRepositoriesLoading = createSelector(
-  selectUserRepositories,
+  getRepositoriesState,
   (state: RepositoryState) => state.loading
 );
 
-export const selectFollowersLoading = createSelector(
-  selectUserFollowers,
-  (state: FollowersState) => state.loading
-);
+/**
+ * Getter selectors
+ */
+
+export const selectAllUsers = (state: State) => state.usersState.users;
+export const selectActiveUserId = (state:State) => state.usersState.activeUserId;
+
+export const selectActiveUser = createSelector(
+  selectAllUsers,
+  selectActiveUserId,
+  (allUsers, activeUserId) => allUsers.find(user => user.id === activeUserId)
+)
+
+export const selectFollowersTotal = createSelector(
+  selectAllUsers,
+  calculateTotalFollowers
+)

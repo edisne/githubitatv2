@@ -3,58 +3,63 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';import { RouterModule, Routes } from '@angular/router';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 
-import { MatSliderModule } from '@angular/material/slider';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatButtonModule} from '@angular/material/button';
-import { MatIconModule} from '@angular/material/icon';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatSelectModule } from '@angular/material/select';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatDividerModule} from '@angular/material/divider';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatSidenavModule} from '@angular/material/sidenav'
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { followersReducer, githubReducer, repositoriesReducer, userReducer } from './core/store/github.reducer';
+import { followersReducer, usersReducer, repositoriesReducer } from './core/store/github.reducers';
 import { GithubEffects } from './core/store/github.effects';
-import { UserCardComponent } from './shared/user-card/user-card.component';
-import { UserDetailsComponent } from './users/user-details/user-details.component';
-import { RepositoryCardComponent } from './shared/repository-card/repository-card.component';
 import { GithubInterceptor } from './core/interceptors/github.interceptor';
+import { environment } from 'src/environments/environment';
+import { userReducer } from './users/state/user.reducers';
+import { SharedModule } from './shared/shared.module';
+import { UsersModule } from './users/users.module';
+import { CommonModule } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FOLLOWERS_FEATURE_KEY, USERS_FEATURE_KEY } from './core/interfaces/app.state';
+import { USER_FEATURE_KEY } from './users/state/user.state';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    UserCardComponent,
-    UserDetailsComponent,
-    RepositoryCardComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     StoreModule.forRoot({
-      github: githubReducer,
-      user: userReducer,
-      followers: followersReducer,
-      repositories: repositoriesReducer,
+      [USERS_FEATURE_KEY]: usersReducer,
+      [USER_FEATURE_KEY]: userReducer,
+      [FOLLOWERS_FEATURE_KEY]: followersReducer,
+      repositoriesState: repositoriesReducer,
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
     }),
     EffectsModule.forRoot([GithubEffects]),
     AppRoutingModule,
@@ -62,6 +67,10 @@ import { GithubInterceptor } from './core/interceptors/github.interceptor';
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    CommonModule,
+
+    SharedModule,
+    UsersModule,
 
     MatSliderModule,
     MatCardModule,

@@ -9,12 +9,7 @@
 <mat-sidenav-container>
 	<mat-sidenav-content>
 		<div class="content mat-app-background" [ngClass]="{'dark-side': isDarkSide}">
-			<div class="slide-animation" [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''">
-				<div class="spinner-container" *ngIf="isLoading$ | async">
-					<mat-spinner diameter="60" color="primary" strokeWidth="3"></mat-spinner>
-				</div>
-				<router-outlet #o="outlet"></router-outlet>
-			</div>
+			<router-outlet #o="outlet"></router-outlet>
 		</div>
 	</mat-sidenav-content>
 </mat-sidenav-container>

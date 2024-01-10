@@ -44,3 +44,11 @@ export interface User {
     collaborators: number;
   };
 }
+
+export type UserRequiredProps = Pick<User, "login" | "id">
+
+export function calculateTotalFollowers(users: User[]) {
+  return users.reduce((total, user) =>{
+    return total + user.followers;
+  }, 0);
+}

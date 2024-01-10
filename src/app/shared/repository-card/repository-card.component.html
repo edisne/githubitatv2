@@ -2,23 +2,23 @@
     <div class="col-12 pe-4">
         <mat-card *ngIf="repository">
             <mat-card-title>
-                {{ repository.name }}
+                {{ repository?.name }}
             </mat-card-title>
             <mat-card-subtitle>
-                {{ repository.full_name }}
+                {{ repository?.full_name }}
             </mat-card-subtitle>
             <mat-divider></mat-divider>
             <mat-card-content class="mt-4">
-                <p>{{ repository.description || 'No description available' }}</p>
+                <p>{{ repository?.description || 'No description available' }}</p>
             </mat-card-content>
             <mat-divider></mat-divider>
             <mat-card-actions class="footer">
                 <div class="repo-stats">
-                    <span><mat-icon>star</mat-icon> {{ repository.stargazers_count }}</span>
-                    <span><mat-icon>call_split</mat-icon> {{ repository.forks_count }}</span>
-                    <span><mat-icon>visibility</mat-icon> {{ repository.watchers_count }}</span>
+                    <span><mat-icon>star</mat-icon> {{ repository?.stargazers_count }}</span>
+                    <span><mat-icon>call_split</mat-icon> {{ repository?.forks_count }}</span>
+                    <span><mat-icon>visibility</mat-icon> {{ repository?.watchers_count }}</span>
                 </div>
-                <a mat-button [href]="repository.html_url" target="_blank">View on GitHub</a>
+                <a mat-button [href]="repository?.html_url" target="_blank">View on GitHub</a>
             </mat-card-actions>
         </mat-card>
     </div>

@@ -1,22 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable, catchError, debounceTime, distinctUntilChanged, filter, map, of, skip, switchMap } from 'rxjs';
-import { Pagination } from '../core/interfaces/pagination';
-import { User } from '../core/models/user';
-import { GithubService } from '../core/services/github.service';
-import { ToastService } from '../core/services/toast.service';
-import * as GithubActions from '../core/store/github.actions';
-import { selectGithubUsers } from '../core/store/github.selector';
-
+import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from "@angular/material/autocomplete";
+import { PageEvent } from "@angular/material/paginator";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { Observable, skip, debounceTime, distinctUntilChanged, filter, switchMap, map, catchError, of, exhaustMap, combineLatest, tap } from "rxjs";
+import { User } from "../core/models/user";
+import { GithubService } from "../core/services/github.service";
+import { ToastService } from "../core/services/toast.service";
+import { usersError, usersLoading, getUsers } from "../core/store/github.selector";
+import { slideInAnimation } from "../layout/animations";
+import * as GithubActions from "../core/store/github.actions";
+import { State as GlobalState } from "../core/interfaces/app.state";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [slideInAnimation]
 })
 export class HomeComponent implements OnInit {
 
@@ -31,11 +32,13 @@ export class HomeComponent implements OnInit {
   searchTerm: string = '';
   searchResult$: Observable<User[]> | undefined;
 
-  users$: Observable<User[]> = new Observable;
+  users$ = this.store.select(getUsers);
+  loading$ = this.store.select(usersLoading);
+  error$ = this.store.select(usersError);
 
   constructor(
     private router: Router,
-    private store: Store,
+    private store: Store<GlobalState>,
     private githubService: GithubService,
     private toast: ToastService,
     private activatedRoute: ActivatedRoute
@@ -53,7 +56,6 @@ export class HomeComponent implements OnInit {
       else {
         this.store.dispatch(GithubActions.loadUsers({ pageSize: this.pagination.itemsPerPage, since: 0 }));
       }
-      this.users$ = this.store.select(selectGithubUsers);
     });
 
     this.searchResult$ = this.searchControl.valueChanges.pipe(
@@ -68,6 +70,18 @@ export class HomeComponent implements OnInit {
         return of([]);
       })
     );
+
+    /* Alternative way */
+    // const allUsers$ = this.githubService.getUsers(10, 0);  
+
+    // this.searchResult$ = combineLatest([
+    //   allUsers$,
+    //   this.searchControl.valueChanges
+    // ]).pipe(
+    //   map(([users, serachTerm]) =>
+    //     users.filter((user : User) => user.login.includes(serachTerm))
+    //   )
+    // );
   }
 
   onSelect(event: MatAutocompleteSelectedEvent) {
